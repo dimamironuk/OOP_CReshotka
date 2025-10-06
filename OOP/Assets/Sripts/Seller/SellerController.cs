@@ -29,4 +29,28 @@ public class SellerController : MonoBehaviour
         product.Init(name, price, description);
         return product;
     }
+
+    public void BuyProduct(int index)
+    {
+        if(index > _products.Count || index < 0)
+        {
+            Debug.Log("Error: Out of list");
+        }
+        else
+        {
+            _products.RemoveAt(index);
+        }
+    }
+    public Product GetProduct(int index) {
+        if (index > _products.Count || index < 0)
+        {
+            return CreateProduct("NONE",0,"NONE");
+        }
+        else
+        {
+            return _products[index];
+        }
+    }
+
+    
 }
