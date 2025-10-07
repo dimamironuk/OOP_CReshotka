@@ -18,5 +18,10 @@ public class Enemy : MonoBehaviour, IDamagable
     [Header("Patrol")]
     public float radiusPatrol = 6f;
     public float timePatrol = 2f;
+
+    public void TakeDMG(float damageAmount)
+{
+
+}
     
 }

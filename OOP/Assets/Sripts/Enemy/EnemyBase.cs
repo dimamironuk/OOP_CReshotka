@@ -16,10 +16,10 @@ public abstract class EnemyBase : MonoBehaviour
 
     protected virtual void Start()
     {
-        agent = GetComponent<NavMesAgent>();
+        agent = GetComponent<NavMeshAgent>();
         agent.speed = config.Speed;
 
-        target = GameObject.FindGameOnjectWithTag("Player")?.transform;
+        target = GameObject.FindGameObjectWithTag("Player")?.transform;
 
         currentState = State.Patrol;
     }
@@ -50,7 +50,7 @@ public abstract class EnemyBase : MonoBehaviour
             return;
         }
 
-        float DistanceToTarget = vector3.Distance(transform.position, target.position);
+        float DistanceToTarget = Vector3.Distance(transform.position, target.position);
 
         if (DistanceToTarget <= config.attackRange)
         {
