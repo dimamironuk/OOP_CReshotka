@@ -32,10 +32,10 @@ public abstract class EnemyBase : MonoBehaviour
                 HandlePatrol();
                 break;
             case State.Chase:
-                HandleChase;
+                HandleChase();
                 break;
             case State.Attack:
-                HandleAttack;
+                HandleAttack();
                 break;
         }
 
@@ -61,12 +61,35 @@ public abstract class EnemyBase : MonoBehaviour
         {
             currentState = State.Chase;
         }
-        
+
         else
         {
             currentState = State.Patrol;
         }
 
     }
+    protected virtual void HandlePatrol()
+    {
+        if (!agent.hasPath || agent.remainingDistance < 0.5f)
+        {
+            Vector3 randomPoint = transform.position + Random.insideUnitSphere * config.radiusPatrol;
+            NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, config.radiusPatrol, 1);
+            agent.SetDestination(hit.position);
+        }
+    }
+
+    protected virtual void HandleChase()
+    {
+        agent.SetDestination(target.position);
+    }
+
+    protected virtual void HandleAttack()
+    {
+        agent.SetDestination(transform.position);
+        transform.LookAt(target);
+        OnAttack();
+    }
+
+    protected abstract void OnAttack();
 
 }
