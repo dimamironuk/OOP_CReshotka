@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class Witch : Mainch
 {
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         Init(80, 15, 0.3f, 2.0f);
     }
-    void Update()
+
+    protected override void FixedUpdate()
     {
-        
+        base.FixedUpdate();
+    }
+
+    protected override void Update()
+    {
+        base.Update();
     }
     public void CastSpell(IDamagable target)
     {
