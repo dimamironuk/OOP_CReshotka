@@ -1,26 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent))]
 public abstract class EnemyBase : MonoBehaviour
 {
     [SerializeField] protected Enemy config;
 
-    protected NavMeshAgent agent;
     protected Transform target;
+    protected Rigidbody2D rb;
 
     protected enum State { Patrol, Chase, Attack, Dead }
     protected State currentState;
 
     protected virtual void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-        agent.speed = config.Speed;
-
+        rb = GetComponent<Rigidbody2D>();
         target = GameObject.FindGameObjectWithTag("Player")?.transform;
-
         currentState = State.Patrol;
     }
 
@@ -50,46 +43,43 @@ public abstract class EnemyBase : MonoBehaviour
             return;
         }
 
-        float DistanceToTarget = Vector3.Distance(transform.position, target.position);
+        float distance = Vector2.Distance(transform.position, target.position);
 
-        if (DistanceToTarget <= config.attackRange)
-        {
+        if (distance <= config.attackRange)
             currentState = State.Attack;
-        }
-
-        else if (DistanceToTarget <= config.sightRange)
-        {
+        else if (distance <= config.sightRange)
             currentState = State.Chase;
-        }
-
         else
-        {
             currentState = State.Patrol;
-        }
-
     }
+
     protected virtual void HandlePatrol()
     {
-        if (!agent.hasPath || agent.remainingDistance < 0.5f)
-        {
-            Vector3 randomPoint = transform.position + Random.insideUnitSphere * config.radiusPatrol;
-            NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, config.radiusPatrol, 1);
-            agent.SetDestination(hit.position);
-        }
+        // Рух випадковим напрямком
+        if (!IsInvoking(nameof(ChooseNewDirection)))
+            InvokeRepeating(nameof(ChooseNewDirection), 0, 3f);
+
+        rb.velocity = patrolDirection * config.Speed;
+    }
+
+    Vector2 patrolDirection = Vector2.zero;
+    void ChooseNewDirection()
+    {
+        patrolDirection = Random.insideUnitCircle.normalized;
     }
 
     protected virtual void HandleChase()
     {
-        agent.SetDestination(target.position);
+        if (target == null) return;
+        Vector2 dir = (target.position - transform.position).normalized;
+        rb.velocity = dir * config.Speed;
     }
 
     protected virtual void HandleAttack()
     {
-        agent.SetDestination(transform.position);
-        transform.LookAt(target);
+        rb.velocity = Vector2.zero;
         OnAttack();
     }
 
     protected abstract void OnAttack();
-
 }
