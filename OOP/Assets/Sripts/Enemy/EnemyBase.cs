@@ -55,7 +55,6 @@ public abstract class EnemyBase : MonoBehaviour
 
     protected virtual void HandlePatrol()
     {
-        // Рух випадковим напрямком
         if (!IsInvoking(nameof(ChooseNewDirection)))
             InvokeRepeating(nameof(ChooseNewDirection), 0, 3f);
 

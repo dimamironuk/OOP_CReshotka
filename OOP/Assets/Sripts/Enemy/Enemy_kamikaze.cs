@@ -8,11 +8,9 @@ public class ExplosiveEnemy : EnemyBase
 
     protected override void OnAttack()
     {
-        // Ефект вибуху (опціонально)
         if (explosionEffect != null)
             Instantiate(explosionEffect, transform.position, Quaternion.identity);
 
-        // Знаходимо всі об’єкти навколо
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
 
         foreach (var hit in colliders)
@@ -27,7 +25,6 @@ public class ExplosiveEnemy : EnemyBase
             }
         }
 
-        // Самознищення ворога
         Destroy(gameObject);
     }
 }
