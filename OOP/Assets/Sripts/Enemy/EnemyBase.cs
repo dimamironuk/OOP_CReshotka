@@ -80,5 +80,14 @@ public abstract class EnemyBase : MonoBehaviour
         OnAttack();
     }
 
+    void OnCollisionEnter2D(Collision2D collision)
+{
+    if (collision.gameObject.CompareTag("Wall"))
+    {
+        patrolDirection = new Vector2(patrolDirection.y, -patrolDirection.x);
+    }
+}
+
+
     protected abstract void OnAttack();
 }
