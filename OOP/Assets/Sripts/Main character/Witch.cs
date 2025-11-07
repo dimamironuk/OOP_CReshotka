@@ -43,6 +43,8 @@ public class Witch : Mainch
             Debug.Log("CRITICAL HIT WITH SPELLS!");
         }
         Debug.Log($"{gameObject.name} attacked with the help of black magic");
+
+        target.TakeDMG(spellDamage);
     }
     public void RestoreMana(int amount)
     {

@@ -115,7 +115,9 @@ public abstract class EnemyBase : MonoBehaviour
     {
         currentState = State.Dead;
         rb.velocity = Vector2.zero;
-        Destroy(gameObject, 0.2f); 
+        Destroy(gameObject, 0.2f);
+
+        Debug.Log("Enemy is due!!!");
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
