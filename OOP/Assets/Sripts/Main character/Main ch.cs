@@ -10,6 +10,9 @@ public class Mainch : MonoBehaviour, IDamagable
     Rigidbody2D rb;
     Vector2 direction;
 
+    [SerializeField] private GameObject _sellerPanel;
+    private bool isSeller = false;
+
     [Header("Base stats")]
     [SerializeField] protected int maxHealth;
     [SerializeField] protected int skill_baseDMG;
@@ -48,6 +51,10 @@ public class Mainch : MonoBehaviour, IDamagable
         {
             float yRotation = (direction.x >= 0f) ? 180f : 0f;
             transform.rotation = Quaternion.Euler(0, yRotation, 0);
+        }
+        if (isSeller && Input.GetKeyDown(KeyCode.E))
+        {
+            _sellerPanel.SetActive(true);
         }
     }
     public virtual void Init(int health, int damage, float critCh, float critDamage)
@@ -100,5 +107,21 @@ public class Mainch : MonoBehaviour, IDamagable
         if (currentHealth + health >= maxHealth)
             currentHealth = maxHealth;
         else currentHealth += health;
+    }
+
+    //Seller Logic
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Seller")
+        {
+            isSeller = true;    
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Seller")
+        {
+            isSeller = false;
+        }
     }
 }
