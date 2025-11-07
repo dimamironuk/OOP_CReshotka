@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class Mainch : MonoBehaviour, IDamagable
@@ -9,9 +10,6 @@ public class Mainch : MonoBehaviour, IDamagable
     public float speed = 25f;
     Rigidbody2D rb;
     Vector2 direction;
-
-    [SerializeField] private GameObject _sellerPanel;
-    private bool isSeller = false;
 
     [Header("Base stats")]
     [SerializeField] protected int maxHealth;
@@ -52,10 +50,7 @@ public class Mainch : MonoBehaviour, IDamagable
             float yRotation = (direction.x >= 0f) ? 180f : 0f;
             transform.rotation = Quaternion.Euler(0, yRotation, 0);
         }
-        if (isSeller && Input.GetKeyDown(KeyCode.E))
-        {
-            _sellerPanel.SetActive(true);
-        }
+       
     }
     public virtual void Init(int health, int damage, float critCh, float critDamage)
     {
@@ -109,19 +104,4 @@ public class Mainch : MonoBehaviour, IDamagable
         else currentHealth += health;
     }
 
-    //Seller Logic
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Seller")
-        {
-            isSeller = true;    
-        }
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Seller")
-        {
-            isSeller = false;
-        }
-    }
 }
