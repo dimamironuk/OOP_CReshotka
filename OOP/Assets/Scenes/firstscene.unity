@@ -831,7 +831,7 @@ GameObject:
   - component: {fileID: 1225197791}
   - component: {fileID: 1225197793}
   - component: {fileID: 1225197796}
-  - component: {fileID: 1225197795}
+  - component: {fileID: 1225197797}
   m_Layer: 0
   m_Name: enemy_2
   m_TagString: Enemy
@@ -920,10 +920,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 1237536935}
   explosionRadius: 3
-  explosionDamage: 40
+  damage: 40
   explosionEffect: {fileID: 0}
---- !u!61 &1225197795
-BoxCollider2D:
+--- !u!50 &1225197796
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1225197790}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
+--- !u!70 &1225197797
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -954,46 +981,9 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5, y: 5}
-    newSize: {x: 5, y: 5}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 5, y: 5}
-  m_EdgeRadius: 0
---- !u!50 &1225197796
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1225197790}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Offset: {x: 0.057995092, y: 0.056941368}
+  m_Size: {x: 10.115986, y: 10.159802}
+  m_Direction: 0
 --- !u!1 &1237536934
 GameObject:
   m_ObjectHideFlags: 0
@@ -1026,7 +1016,7 @@ MonoBehaviour:
   maxHealth: 100
   Speed: 2.5
   sightRange: 8
-  attackRange: 2.5
+  attackRange: 2.8
   radiusPatrol: 6
   timePatrol: 2
 --- !u!4 &1237536936
@@ -1056,7 +1046,7 @@ GameObject:
   - component: {fileID: 1448424234}
   - component: {fileID: 1448424233}
   - component: {fileID: 1448424232}
-  - component: {fileID: 1448424237}
+  - component: {fileID: 1448424236}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1203,7 +1193,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1448424237
+--- !u!114 &1448424236
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1216,11 +1206,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joystick: {fileID: 751746276}
-  speed: 15
+  speed: 25
   maxHealth: 0
   baseDMG: 0
   critChance: 0
   critDMG: 0
+  currentHealth: 0
 --- !u!1 &1488002166
 GameObject:
   m_ObjectHideFlags: 0
