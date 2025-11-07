@@ -14,7 +14,7 @@ public class HeartPickup : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            Mainch player = collision.GetComponent<Mainch>();
+            Mainch player = collision.GetComponent<Witch>();
             if (player != null)
             {
                 player.AddHealth(healAmount);

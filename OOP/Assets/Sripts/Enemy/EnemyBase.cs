@@ -111,12 +111,12 @@ public abstract class EnemyBase : MonoBehaviour
         }
     }
 
-    
 
     [Header("Loot Settings")]
-
     public GameObject heartPrefab;
+
     public float heartDropChance = 0.5f;
+
 
     public void Die()
     {
@@ -127,6 +127,7 @@ public abstract class EnemyBase : MonoBehaviour
         }
     }
 
+
     private void TryDropHeart()
     {
         if (heartPrefab != null && Random.value <= heartDropChance)
@@ -134,6 +135,7 @@ public abstract class EnemyBase : MonoBehaviour
             Instantiate(heartPrefab, transform.position, Quaternion.identity);
         }
     }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

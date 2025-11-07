@@ -50,7 +50,7 @@ public class Mainch : MonoBehaviour, IDamagable
             float yRotation = (direction.x >= 0f) ? 180f : 0f;
             transform.rotation = Quaternion.Euler(0, yRotation, 0);
         }
-
+       
     }
     public virtual void Init(int health, int damage, float critCh, float critDamage)
     {
@@ -103,5 +103,15 @@ public class Mainch : MonoBehaviour, IDamagable
             currentHealth = maxHealth;
         else currentHealth += health;
     }
+
+    public void AddHealth(int amount)
+    {
+        currentHealth += amount;
+        if (currentHealth > maxHealth)
+            currentHealth = maxHealth;
+
+        Debug.Log($"Player healed by {amount}. HP: {currentHealth}/{maxHealth}");
+    }
+
 
 }
