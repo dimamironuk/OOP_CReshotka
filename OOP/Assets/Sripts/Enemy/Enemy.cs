@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour, IDamagable
 
     [Header("Stats")]
     public int maxHealth = 100;
+    [HideInInspector] public int currentHealth;
     public float Speed = 3.5f;
 
 
@@ -19,9 +20,34 @@ public class Enemy : MonoBehaviour, IDamagable
     public float radiusPatrol = 6f;
     public float timePatrol = 2f;
 
-    public void TakeDMG(float damageAmount)
-{
+    private void Awake()
+    {
+        currentHealth = maxHealth;
+    }
 
-}
-    
+    public void TakeDMG(float damageAmount)
+    {
+        currentHealth = -(int)damageAmount;
+
+    if (currentHealth == 0)
+        {
+            Die();
+    }
+
+    }
+
+public void Die()
+    {
+        EnemyBase baseScript = GetComponent<EnemyBase>();
+        if (baseScript != null)
+        {
+            Destroy(gameObject); 
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+
 }
