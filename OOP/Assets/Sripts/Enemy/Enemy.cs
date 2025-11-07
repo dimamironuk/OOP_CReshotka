@@ -48,6 +48,4 @@ public void Die()
             Destroy(gameObject);
         }
     }
-
-
 }

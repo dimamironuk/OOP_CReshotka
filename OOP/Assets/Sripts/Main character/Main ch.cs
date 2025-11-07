@@ -6,16 +6,17 @@ using UnityEngine.UI;
 public class Mainch : MonoBehaviour, IDamagable
 {
     public DynamicJoystick joystick;
-    public float speed = 5f;
+    public float speed = 25f;
     Rigidbody2D rb;
     Vector2 direction;
 
     [Header("Base stats")]
     [SerializeField] protected int maxHealth;
-    [SerializeField] protected int baseDMG;
-    [SerializeField, Range(0.0f, 1.0f)] protected float critChance;
-    [SerializeField] protected float critDMG;
+    [SerializeField] protected int skill_baseDMG;
+    [SerializeField, Range(0.0f, 1.0f)] protected float skill_critChance;
+    [SerializeField] protected float skill_critDMG;
     [SerializeField] protected int currentHealth;
+
     public bool IsDead => currentHealth <= 0;
     public event System.Action OnDeath;
     void Awake()
@@ -52,9 +53,9 @@ public class Mainch : MonoBehaviour, IDamagable
     public virtual void Init(int health, int damage, float critCh, float critDamage)
     {
         maxHealth = health;
-        baseDMG = damage;
-        critChance = critCh;
-        critDMG = critDamage;
+        skill_baseDMG = damage;
+        skill_critChance = critCh;
+        skill_critDMG = critDamage;
 
         currentHealth = maxHealth;
     }
@@ -80,10 +81,10 @@ public class Mainch : MonoBehaviour, IDamagable
     }
     protected virtual int CalculateDamage()
     {
-        int damage = baseDMG;
-        if (Random.value <= critChance)
+        int damage = skill_baseDMG;
+        if (Random.value <= skill_critChance)
         {
-            damage *= Mathf.RoundToInt(critDMG);
+            damage *= Mathf.RoundToInt(skill_critDMG);
         }
         return damage;
     }
@@ -91,5 +92,13 @@ public class Mainch : MonoBehaviour, IDamagable
     {
         int damage = CalculateDamage();
         target.TakeDMG(damage);
+    }
+
+    public virtual void GetHealth(int health)
+    {
+        if (health <= 0) return;
+        if (currentHealth + health >= maxHealth)
+            currentHealth = maxHealth;
+        else currentHealth += health;
     }
 }
