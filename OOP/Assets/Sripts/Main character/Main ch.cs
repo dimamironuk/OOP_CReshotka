@@ -15,7 +15,7 @@ public class Mainch : MonoBehaviour, IDamagable
     [SerializeField] protected int baseDMG;
     [SerializeField, Range(0.0f, 1.0f)] protected float critChance;
     [SerializeField] protected float critDMG;
-    public int currentHealth { get; protected set; }
+    [SerializeField] protected int currentHealth;
     public bool IsDead => currentHealth <= 0;
     public event System.Action OnDeath;
     void Awake()
@@ -65,10 +65,13 @@ public class Mainch : MonoBehaviour, IDamagable
             currentHealth = 0;
             Debug.Log($"{gameObject.name} вмер!");
             OnDeath?.Invoke();
+            Application.LoadLevel(Application.loadedLevel);
         }
     }
     public virtual void TakeDMG(float damage)
     {
+        Debug.Log($"работает");
+
         if (IsDead) return;
 
         currentHealth -= Mathf.RoundToInt(damage);

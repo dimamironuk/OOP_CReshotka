@@ -6,8 +6,9 @@ public class Witch : Mainch
 {
     protected override void Start()
     {
+       
         base.Start();
-        Init(80, 15, 0.3f, 2.0f);
+        Init(40, 15, 0.3f, 2.0f);
     }
 
     protected override void FixedUpdate()

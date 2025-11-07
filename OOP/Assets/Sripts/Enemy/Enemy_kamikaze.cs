@@ -3,10 +3,20 @@ using UnityEngine;
 public class ExplosiveEnemy : EnemyBase
 {
     [SerializeField] private float explosionRadius = 3f;
-    [SerializeField] private float explosionDamage = 40f;
+    [SerializeField] private float   damage = 40f;
     [SerializeField] private GameObject explosionEffect;
 
-    protected override void OnAttack()
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.GetComponent<Mainch>().TakeDMG(damage);
+            Debug.Log("ok");
+
+            Destroy(gameObject);
+        }
+    }
+    protected override void OnAttack() 
     {
         if (explosionEffect != null)
             Instantiate(explosionEffect, transform.position, Quaternion.identity);
@@ -20,11 +30,10 @@ public class ExplosiveEnemy : EnemyBase
                 Mainch player = hit.GetComponent<Mainch>();
                 if (player != null)
                 {
-                    player.TakeDMG(explosionDamage);
+                    player.TakeDMG(damage);
                 }
             }
         }
 
-        Destroy(gameObject);
     }
 }
