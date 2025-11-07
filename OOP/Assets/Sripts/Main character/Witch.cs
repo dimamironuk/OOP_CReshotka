@@ -12,9 +12,9 @@ public class Witch : Mainch
     protected override void Start()
     {
         base.Start();
-        Init(40, 15, 0.3f, 2.0f);
+        Init(400, 15, 0.3f, 2.0f);
         currentMana = maxMana;
-        Debug.Log($"Відьма ініціалізована. Здоров'я: {maxHealth}, Мана: {maxMana}");
+        Debug.Log($"Witch initialized. Health: {maxHealth}, Mana: {maxMana}");
     }
 
     protected override void FixedUpdate()
@@ -30,22 +30,19 @@ public class Witch : Mainch
     {
         if (currentMana < spellCost)
         {
-            Debug.LogWarning($"{gameObject.name}: Недостатньо мани ({currentMana}/{spellCost}) для CastSpell!");
-            return; // Виходимо з функції, якщо мани недостатньо
+            Debug.LogWarning($"{gameObject.name}: Not enough mana ({currentMana}/{spellCost}) for CastSpell!");
+            return;
         }
-
-        // 2. ВИТРАТА МАНИ
         currentMana -= spellCost;
-        Debug.Log($"{gameObject.name}: Використано {spellCost} мани. Залишилось: {currentMana}.");
+        Debug.Log($"{gameObject.name}: Used {spellCost} Remaining: {currentMana}.");
 
         float spellDamage = skill_baseDMG * 1.5f;
         if (Random.value <= skill_critChance)
         {
             spellDamage *= skill_critDMG;
-            Debug.Log("КРИТИЧНИЙ УДАР ЗАКЛИНАННЯМ!");
+            Debug.Log("CRITICAL HIT WITH SPELLS!");
         }
-        Debug.Log($"{gameObject.name} атакувала за допомоги чорної магії");
-        target.TakeDMG(spellDamage);
+        Debug.Log($"{gameObject.name} attacked with the help of black magic");
     }
     public void RestoreMana(int amount)
     {
