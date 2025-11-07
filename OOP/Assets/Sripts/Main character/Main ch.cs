@@ -29,11 +29,11 @@ public class Mainch : MonoBehaviour, IDamagable
         rb = GetComponent<Rigidbody2D>();
         if (rb == null)
         {
-            Debug.LogError("Rigidbody2D не знайдений на об'єкті!");
+            Debug.LogError("Rigidbody2D пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ'пїЅпїЅпїЅ!");
         }
         if (joystick == null)
         {
-            Debug.LogWarning("Joystick не встановлений в інспекторі!");
+            Debug.LogWarning("Joystick пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!");
         }
     }
     protected virtual void FixedUpdate()
@@ -50,7 +50,7 @@ public class Mainch : MonoBehaviour, IDamagable
             float yRotation = (direction.x >= 0f) ? 180f : 0f;
             transform.rotation = Quaternion.Euler(0, yRotation, 0);
         }
-       
+
     }
     public virtual void Init(int health, int damage, float critCh, float critDamage)
     {
@@ -66,14 +66,14 @@ public class Mainch : MonoBehaviour, IDamagable
         if (IsDead)
         {
             currentHealth = 0;
-            Debug.Log($"{gameObject.name} вмер!");
+            Debug.Log($"{gameObject.name} пїЅпїЅпїЅпїЅ!");
             OnDeath?.Invoke();
             Application.LoadLevel(Application.loadedLevel);
         }
     }
     public virtual void TakeDMG(float damage)
     {
-        Debug.Log($"работает");
+        Debug.Log($"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
 
         if (IsDead) return;
 

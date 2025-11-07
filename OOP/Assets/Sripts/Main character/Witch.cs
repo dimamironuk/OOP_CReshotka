@@ -54,4 +54,14 @@ public class Witch : Mainch
             currentMana = maxMana;
         }
     }
+
+
+     public void AddHealth(int amount)
+    {
+        currentHealth += amount;
+        if (currentHealth > maxHealth)
+            currentHealth = maxHealth;
+
+        Debug.Log($"Player healed by {amount}. HP: {currentHealth}/{maxHealth}");
+    }
 }
