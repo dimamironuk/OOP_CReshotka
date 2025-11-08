@@ -1,64 +1,65 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnerController : MonoBehaviour
+[DisallowMultipleComponent]
+public sealed class SpawnerController : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject GoblinPrefab;
-    [SerializeField]
-    private GameObject BigGoblinPrefab;
+    [Header("Enemy prefab (has EnemyBase/ExplosiveEnemy)")]
+    public GameObject enemyPrefab;
 
-    [SerializeField]
-    private float GoblinInterval = 4f;
-    [SerializeField]
-    private float BigGoblinInterval = 10f;
+    [Header("Wave settings")]
+    [Min(1)] public int enemiesPerWave = 5;
+    [Min(0f)] public float waveDelay = 2f;
 
-    [SerializeField]
-    private float timeToDecreaseInterval = 60f; 
-    [SerializeField]
-    private float intervalDecreaseAmount = 0.1f;
+    private readonly HashSet<EnemyDeathRelay> _alive = new();
+    private bool _waveScheduled;
+    private int _waveIndex;
 
-    void Start()
+    private void Start()
     {
-        StartCoroutine(SpawnEnemy(GoblinInterval, GoblinPrefab));
-        StartCoroutine(SpawnEnemy(BigGoblinInterval, BigGoblinPrefab));
-        StartCoroutine(DifficultyScaler());
-    }
-    
-    private IEnumerator SpawnEnemy(float initialInterval, GameObject enemy)
-    {
-        while (true)
+        if (enemyPrefab == null)
         {
-            float currentInterval;
-
-            if (enemy == GoblinPrefab)
-            {
-                currentInterval = GoblinInterval;
-            }
-            else
-            {
-                currentInterval = BigGoblinInterval;
-            }
-
-            yield return new WaitForSeconds(currentInterval);
-            Instantiate(enemy, new Vector3(Random.Range(-5f, 5f), Random.Range(-6f, 6f), 0), Quaternion.identity);
+            Debug.LogError("[Spawner] Enemy Prefab not assigned!");
+            enabled = false; return;
         }
+
+        SpawnWave();
     }
 
-    private IEnumerator DifficultyScaler()
+    private void SpawnWave()
     {
-        while (true)
+        _waveIndex++;
+        _waveScheduled = false;
+        _alive.Clear();
+
+        for (int i = 0; i < enemiesPerWave; i++)
         {
-            yield return new WaitForSeconds(timeToDecreaseInterval);
-            if (GoblinInterval > 0.5f)
-            {
-                GoblinInterval -= intervalDecreaseAmount;
-            }
-            if (BigGoblinInterval > 1.0f)
-            {
-                BigGoblinInterval -= intervalDecreaseAmount;
-            }
+            // вороги народжуються з позиції спавнера
+            var pos = transform.position;
+            var enemyGO = Instantiate(enemyPrefab, pos, Quaternion.identity);
+            enemyGO.name = $"Enemy_W{_waveIndex:D2}_{i:D2}";
+
+            var relay = enemyGO.GetComponent<EnemyDeathRelay>();
+            if (relay == null) relay = enemyGO.AddComponent<EnemyDeathRelay>();
+
+            relay.Destroyed += OnEnemyDestroyed;
+            _alive.Add(relay);
+        }
+
+        Debug.Log($"[Spawner] Wave #{_waveIndex} spawned: {_alive.Count} enemies");
+    }
+
+    private void OnEnemyDestroyed(EnemyDeathRelay relay)
+    {
+        if (relay == null) return;
+        relay.Destroyed -= OnEnemyDestroyed;
+        _alive.Remove(relay);
+
+        if (_alive.Count == 0 && !_waveScheduled)
+        {
+            _waveScheduled = true;
+            Invoke(nameof(SpawnWave), waveDelay);
+            Debug.Log($"[Spawner] Wave cleared. Next in {waveDelay:0.00}s");
         }
     }
 }

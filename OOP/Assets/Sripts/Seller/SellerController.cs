@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class SellerController : MonoBehaviour
+public class SellerController : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private string _nameSeller;
     [SerializeField] private List<Product> _products;
+    [SerializeField] private GameObject _sellerPanel;
+    [SerializeField] private GameObject _menuPauseButton;
+    private bool _playerNear = false;
     private void Start()
     {
         _products = new List<Product>();
@@ -28,5 +32,51 @@ public class SellerController : MonoBehaviour
         Product product = go.AddComponent<Product>();
         product.Init(name, price, description);
         return product;
+    }
+
+    public void BuyProduct(int index)
+    {
+        if(index > _products.Count || index < 0)
+        {
+            Debug.Log("Error: Out of list");
+        }
+        else
+        {
+            _products.RemoveAt(index);
+        }
+    }
+    public Product GetProduct(int index) {
+        if (index > _products.Count || index < 0)
+        {
+            return CreateProduct("NONE",0,"NONE");
+        }
+        else
+        {
+            return _products[index];
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            _playerNear = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            _playerNear = false;
+        }
+    }
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (_playerNear && _sellerPanel != null)
+        {
+            _sellerPanel.SetActive(true);
+            _menuPauseButton.SetActive(false);
+        }
     }
 }
