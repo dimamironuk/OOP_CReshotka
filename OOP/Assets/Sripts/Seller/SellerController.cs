@@ -27,10 +27,16 @@ public class SellerController : MonoBehaviour, IPointerClickHandler
             _products.RemoveAt(index);
         }
     }
-    public Product GetProduct(int index) {
+    public Product GetProduct(int index)
+    {
+        if (index < 0 || index >= _products.Count)
+        {
+            return null;
+        }
         return _products[index];
-
     }
+
+
     public int GetCountProduct()
     {
         return _products.Count;

@@ -1,12 +1,14 @@
 using UnityEngine;
 
-public class Product : MonoBehaviour
+public class Product : MonoBehaviour, IItmes
 {
     [SerializeField] private string _name;
     [SerializeField] private int _price;
     [SerializeField] private string _description;
     [SerializeField] private Sprite _icon;
+    [SerializeField] private Rarity _rarity;
 
+    public Rarity ItemRarity { get => _rarity; set => _rarity = value; }
     private void Awake()
     {
         _icon = GetComponent<SpriteRenderer>().sprite;
@@ -17,6 +19,10 @@ public class Product : MonoBehaviour
         _price = price;
         _description = description;
         _icon = icon;
+    }
+    public Product GetItem()
+    {
+        return this;
     }
     public Sprite GetImage()
     {

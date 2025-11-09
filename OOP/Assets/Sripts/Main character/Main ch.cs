@@ -10,6 +10,7 @@ public class Mainch : MonoBehaviour, IDamagable
     public float speed = 25f;
     Rigidbody2D rb;
     Vector2 direction;
+    [SerializeField] private Slider _hpBar;
 
     [Header("Base stats")]
     [SerializeField] protected int maxHealth;
@@ -54,12 +55,15 @@ public class Mainch : MonoBehaviour, IDamagable
     }
     public virtual void Init(int health, int damage, float critCh, float critDamage)
     {
+
         maxHealth = health;
         skill_baseDMG = damage;
         skill_critChance = critCh;
         skill_critDMG = critDamage;
-
         currentHealth = maxHealth;
+        _hpBar.maxValue = maxHealth;
+        _hpBar.value = currentHealth;
+        Canvas.ForceUpdateCanvases();
     }
     public virtual void Die()
     {
@@ -78,7 +82,7 @@ public class Mainch : MonoBehaviour, IDamagable
         if (IsDead) return;
 
         currentHealth -= Mathf.RoundToInt(damage);
-
+        _hpBar.value = currentHealth;
         if (currentHealth <= 0) Die();
     }
     protected virtual int CalculateDamage()
@@ -109,7 +113,7 @@ public class Mainch : MonoBehaviour, IDamagable
         currentHealth += amount;
         if (currentHealth > maxHealth)
             currentHealth = maxHealth;
-
+        _hpBar.value = currentHealth;
         Debug.Log($"Player healed by {amount}. HP: {currentHealth}/{maxHealth}");
     }
 
