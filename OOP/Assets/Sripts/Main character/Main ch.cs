@@ -1,23 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Mainch : MonoBehaviour
+public class Mainch : MonoBehaviour, IDamagable
 {
     public DynamicJoystick joystick;
     public float speed = 25f;
     Rigidbody2D rb;
     Vector2 direction;
-
-    [SerializeField] private GameObject _sellerPanel;
-    private bool isSeller = false;
-
-    [Header("Tag Attack Settings")]
-    [SerializeField] public float attackRadius = 10f;
-    [SerializeField] private string EnemyTag = "Enemy";
-    [SerializeField] private float attackCooldownDuration = 1f;
-    private float nextAttackAvailableTime = 0f;
+    [SerializeField] private Slider _hpBar;
 
     [Header("Base stats")]
     [SerializeField] protected int maxHealth;
@@ -37,13 +30,12 @@ public class Mainch : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         if (rb == null)
         {
-            Debug.LogError("Rigidbody2D не знайдений на об'єкті!");
+            Debug.LogError("Rigidbody2D пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ'пїЅпїЅпїЅ!");
         }
         if (joystick == null)
         {
-            Debug.LogWarning("Joystick не встановлений в інспекторі!");
+            Debug.LogWarning("Joystick пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!");
         }
-        nextAttackAvailableTime = Time.time;    
     }
     protected virtual void FixedUpdate()
     {
@@ -59,37 +51,38 @@ public class Mainch : MonoBehaviour
             float yRotation = (direction.x >= 0f) ? 180f : 0f;
             transform.rotation = Quaternion.Euler(0, yRotation, 0);
         }
-        if (isSeller && Input.GetKeyDown(KeyCode.E))
-        {
-            _sellerPanel.SetActive(true);
-        }
-
+       
     }
     public virtual void Init(int health, int damage, float critCh, float critDamage)
     {
+
         maxHealth = health;
         skill_baseDMG = damage;
         skill_critChance = critCh;
         skill_critDMG = critDamage;
-
         currentHealth = maxHealth;
+        _hpBar.maxValue = maxHealth;
+        _hpBar.value = currentHealth;
+        Canvas.ForceUpdateCanvases();
     }
     public virtual void Die()
     {
         if (IsDead)
         {
             currentHealth = 0;
-            Debug.Log($"{gameObject.name} died!");
+            Debug.Log($"{gameObject.name} пїЅпїЅпїЅпїЅ!");
             OnDeath?.Invoke();
             Application.LoadLevel(Application.loadedLevel);
         }
     }
     public virtual void TakeDMG(float damage)
     {
+        Debug.Log($"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
+
         if (IsDead) return;
 
         currentHealth -= Mathf.RoundToInt(damage);
-
+        _hpBar.value = currentHealth;
         if (currentHealth <= 0) Die();
     }
     protected virtual int CalculateDamage()
@@ -101,61 +94,12 @@ public class Mainch : MonoBehaviour
         }
         return damage;
     }
-    public void PerformCooldownAttack()
+    public virtual void Attack(IDamagable target)
     {
-        if (Time.time < nextAttackAvailableTime)
-        {
-            float remainingTime = nextAttackAvailableTime - Time.time;
-            Debug.LogWarning($"Cooldown. Remaining time: {remainingTime:F2} sec.");
-            return;
-        }
-        nextAttackAvailableTime = Time.time + attackCooldownDuration;
-        AttackClosestEnemyByTag();
+        int damage = CalculateDamage();
+        target.TakeDMG(damage);
     }
-    protected void AttackClosestEnemyByTag()
-    {
-        GameObject closestEnemyObject = FindClosestEnemyObjectByTag();
 
-        if (closestEnemyObject != null)
-        {
-            EnemyBase enemyComponent = closestEnemyObject.GetComponent<EnemyBase>();
-
-            if (enemyComponent != null)
-            {
-                int damage = CalculateDamage();
-                enemyComponent.TakeDMG(damage);
-                Debug.Log($"Атаковано {closestEnemyObject.name} (тег '{EnemyTag}') з шкодою {damage}.");
-            }
-            else
-            {
-                Debug.LogWarning($"Знайдено об'єкт '{closestEnemyObject.name}' з тегом '{EnemyTag}', але на ньому немає компонента 'Enemy'.");
-            }
-        }
-        else
-        {
-            Debug.Log($"Ціль з тегом '{EnemyTag}' в радіусі {attackRadius} не знайдена.");
-        }
-    }
-    public GameObject FindClosestEnemyObjectByTag()
-    {
-        GameObject[] allEnemies = GameObject.FindGameObjectsWithTag(EnemyTag);
-
-        GameObject closestEnemyObject = null;
-        float minDistance = attackRadius + 1f;
-        Vector3 currentPosition = transform.position;
-
-        foreach (GameObject enemyObject in allEnemies)
-        {
-            float distanceToEnemy = Vector3.Distance(currentPosition, enemyObject.transform.position);
-
-            if (distanceToEnemy <= attackRadius && distanceToEnemy < minDistance)
-            {
-                minDistance = distanceToEnemy;
-                closestEnemyObject = enemyObject;
-            }
-        }
-        return closestEnemyObject;
-    }
     public virtual void GetHealth(int health)
     {
         if (health <= 0) return;
@@ -164,19 +108,14 @@ public class Mainch : MonoBehaviour
         else currentHealth += health;
     }
 
-    //Seller Logic
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void AddHealth(int amount)
     {
-        if (collision.gameObject.tag == "Seller")
-        {
-            isSeller = true;    
-        }
+        currentHealth += amount;
+        if (currentHealth > maxHealth)
+            currentHealth = maxHealth;
+        _hpBar.value = currentHealth;
+        Debug.Log($"Player healed by {amount}. HP: {currentHealth}/{maxHealth}");
     }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Seller")
-        {
-            isSeller = false;
-        }
-    }
+
+
 }
