@@ -6,9 +6,7 @@ public class Skill_Button : MonoBehaviour
 {
     public Witch playerWitch;
     [SerializeField] private float searchRadius = 15f;
-
     private const string EnemyTag = "Enemy";
-
     void Start()
     {
         if (playerWitch == null)
@@ -20,39 +18,16 @@ public class Skill_Button : MonoBehaviour
     {
         if (playerWitch == null) return;
 
-        EnemyBase closestTarget = FindClosestEnemy();
+        GameObject closestTarget = playerWitch.FindClosestEnemyObjectByTag();
+        EnemyBase target = closestTarget.GetComponent<EnemyBase>();
 
         if (closestTarget != null)
         {
-            playerWitch.CastSpell(closestTarget);
+            playerWitch.CastSpell(target);
         }
         else
         {
             Debug.Log("There are no enemies within range to use the skill.");
         }
-    }
-    private EnemyBase FindClosestEnemy()
-    {
-        GameObject[] allEnemies = GameObject.FindGameObjectsWithTag(EnemyTag);
-
-        EnemyBase closestEnemyComponent = null;
-        float minDistance = searchRadius + 1f; 
-        Vector3 playerPosition = playerWitch.transform.position;
-
-        foreach (GameObject enemyObject in allEnemies)
-        {
-            EnemyBase enemyComponent = enemyObject.GetComponent<EnemyBase>();
-            if (enemyComponent == null) continue;
-
-            float distanceToEnemy = Vector3.Distance(playerPosition, enemyObject.transform.position);
-
-            if (distanceToEnemy <= searchRadius && distanceToEnemy < minDistance)
-            {
-                minDistance = distanceToEnemy;
-                closestEnemyComponent = enemyComponent;
-            }
-        }
-
-        return closestEnemyComponent;
     }
 }

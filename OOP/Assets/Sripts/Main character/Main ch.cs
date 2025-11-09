@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Mainch : MonoBehaviour, IDamagable
+public class Mainch : MonoBehaviour
 {
     public DynamicJoystick joystick;
     public float speed = 25f;
@@ -12,6 +12,12 @@ public class Mainch : MonoBehaviour, IDamagable
 
     [SerializeField] private GameObject _sellerPanel;
     private bool isSeller = false;
+
+    [Header("Tag Attack Settings")]
+    [SerializeField] public float attackRadius = 10f;
+    [SerializeField] private string EnemyTag = "Enemy";
+    [SerializeField] private float attackCooldownDuration = 1f;
+    private float nextAttackAvailableTime = 0f;
 
     [Header("Base stats")]
     [SerializeField] protected int maxHealth;
@@ -37,6 +43,7 @@ public class Mainch : MonoBehaviour, IDamagable
         {
             Debug.LogWarning("Joystick не встановлений в інспекторі!");
         }
+        nextAttackAvailableTime = Time.time;    
     }
     protected virtual void FixedUpdate()
     {
@@ -56,6 +63,7 @@ public class Mainch : MonoBehaviour, IDamagable
         {
             _sellerPanel.SetActive(true);
         }
+
     }
     public virtual void Init(int health, int damage, float critCh, float critDamage)
     {
@@ -71,15 +79,13 @@ public class Mainch : MonoBehaviour, IDamagable
         if (IsDead)
         {
             currentHealth = 0;
-            Debug.Log($"{gameObject.name} вмер!");
+            Debug.Log($"{gameObject.name} died!");
             OnDeath?.Invoke();
             Application.LoadLevel(Application.loadedLevel);
         }
     }
     public virtual void TakeDMG(float damage)
     {
-        Debug.Log($"работает");
-
         if (IsDead) return;
 
         currentHealth -= Mathf.RoundToInt(damage);
@@ -95,12 +101,61 @@ public class Mainch : MonoBehaviour, IDamagable
         }
         return damage;
     }
-    public virtual void Attack(IDamagable target)
+    public void PerformCooldownAttack()
     {
-        int damage = CalculateDamage();
-        target.TakeDMG(damage);
+        if (Time.time < nextAttackAvailableTime)
+        {
+            float remainingTime = nextAttackAvailableTime - Time.time;
+            Debug.LogWarning($"Cooldown. Remaining time: {remainingTime:F2} sec.");
+            return;
+        }
+        nextAttackAvailableTime = Time.time + attackCooldownDuration;
+        AttackClosestEnemyByTag();
     }
+    protected void AttackClosestEnemyByTag()
+    {
+        GameObject closestEnemyObject = FindClosestEnemyObjectByTag();
 
+        if (closestEnemyObject != null)
+        {
+            EnemyBase enemyComponent = closestEnemyObject.GetComponent<EnemyBase>();
+
+            if (enemyComponent != null)
+            {
+                int damage = CalculateDamage();
+                enemyComponent.TakeDMG(damage);
+                Debug.Log($"Атаковано {closestEnemyObject.name} (тег '{EnemyTag}') з шкодою {damage}.");
+            }
+            else
+            {
+                Debug.LogWarning($"Знайдено об'єкт '{closestEnemyObject.name}' з тегом '{EnemyTag}', але на ньому немає компонента 'Enemy'.");
+            }
+        }
+        else
+        {
+            Debug.Log($"Ціль з тегом '{EnemyTag}' в радіусі {attackRadius} не знайдена.");
+        }
+    }
+    public GameObject FindClosestEnemyObjectByTag()
+    {
+        GameObject[] allEnemies = GameObject.FindGameObjectsWithTag(EnemyTag);
+
+        GameObject closestEnemyObject = null;
+        float minDistance = attackRadius + 1f;
+        Vector3 currentPosition = transform.position;
+
+        foreach (GameObject enemyObject in allEnemies)
+        {
+            float distanceToEnemy = Vector3.Distance(currentPosition, enemyObject.transform.position);
+
+            if (distanceToEnemy <= attackRadius && distanceToEnemy < minDistance)
+            {
+                minDistance = distanceToEnemy;
+                closestEnemyObject = enemyObject;
+            }
+        }
+        return closestEnemyObject;
+    }
     public virtual void GetHealth(int health)
     {
         if (health <= 0) return;

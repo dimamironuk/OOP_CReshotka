@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WitchSkill : MonoBehaviour
+public class WitchSkillProjectile : MonoBehaviour
 {
     public float speed = 10f;
     public int damageAmount;
@@ -15,7 +15,6 @@ public class WitchSkill : MonoBehaviour
         damageAmount = damage;
         owner = spellOwner;
     }
-
     void Update()
     {
         if (targetTransform == null || !targetTransform.gameObject.activeInHierarchy)
@@ -37,7 +36,6 @@ public class WitchSkill : MonoBehaviour
             ApplyDamageAndDestroy();
         }
     }
-
     private void ApplyDamageAndDestroy()
     {
         if (targetTransform != null)
@@ -45,7 +43,7 @@ public class WitchSkill : MonoBehaviour
             EnemyBase enemy = targetTransform.GetComponent<EnemyBase>();
             if (enemy != null)
             {
-                //enemy.TakeDMG(damageAmount);
+                enemy.TakeDMG(damageAmount);
             }
         }
         Destroy(gameObject);
