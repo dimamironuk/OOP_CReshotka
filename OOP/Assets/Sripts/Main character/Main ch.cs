@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Mainch : MonoBehaviour
+public class Mainch : MonoBehaviour, IDamagable
 {
     public DynamicJoystick joystick;
     public float speed = 25f;
@@ -42,7 +42,7 @@ public class Mainch : MonoBehaviour
         {
             Debug.LogWarning("Joystick �� ������������ � ���������!");
         }
-        nextAttackAvailableTime = Time.time;    
+        nextAttackAvailableTime = Time.time;
     }
     protected virtual void FixedUpdate()
     {
@@ -58,11 +58,7 @@ public class Mainch : MonoBehaviour
             float yRotation = (direction.x >= 0f) ? 180f : 0f;
             transform.rotation = Quaternion.Euler(0, yRotation, 0);
         }
-        if (isSeller && Input.GetKeyDown(KeyCode.E))
-        {
-            _sellerPanel.SetActive(true);
-        }
-
+       
     }
     public virtual void Init(int health, int damage, float critCh, float critDamage)
     {
@@ -81,7 +77,7 @@ public class Mainch : MonoBehaviour
         if (IsDead)
         {
             currentHealth = 0;
-            Debug.Log($"{gameObject.name} died!");
+            Debug.Log($"{gameObject.name} ����!");
             OnDeath?.Invoke();
             Application.LoadLevel(Application.loadedLevel);
         }
@@ -126,16 +122,16 @@ public class Mainch : MonoBehaviour
             {
                 int damage = CalculateDamage();
                 enemyComponent.TakeDMG(damage);
-                Debug.Log($"��������� {closestEnemyObject.name} (��� '{EnemyTag}') � ������ {damage}.");
+                Debug.Log($"Attacked {closestEnemyObject.name} (teg '{EnemyTag}') amount {damage}.");
             }
             else
             {
-                Debug.LogWarning($"�������� ��'��� '{closestEnemyObject.name}' � ����� '{EnemyTag}', ��� �� ����� ���� ���������� 'Enemy'.");
+                Debug.LogWarning($"Found object '{closestEnemyObject.name}' teg '{EnemyTag}', but there is no enemy.");
             }
         }
         else
         {
-            Debug.Log($"ֳ�� � ����� '{EnemyTag}' � ����� {attackRadius} �� ��������.");
+            Debug.Log($"Teg '{EnemyTag}' in radius {attackRadius} not found.");
         }
     }
     public GameObject FindClosestEnemyObjectByTag()
@@ -158,14 +154,6 @@ public class Mainch : MonoBehaviour
         }
         return closestEnemyObject;
     }
-    public virtual void GetHealth(int health)
-    {
-        if (health <= 0) return;
-        if (currentHealth + health >= maxHealth)
-            currentHealth = maxHealth;
-        else currentHealth += health;
-    }
-
     public void AddHealth(int amount)
     {
         currentHealth += amount;
