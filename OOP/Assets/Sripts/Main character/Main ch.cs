@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class Mainch : MonoBehaviour
@@ -9,9 +10,7 @@ public class Mainch : MonoBehaviour
     public float speed = 25f;
     Rigidbody2D rb;
     Vector2 direction;
-
-    [SerializeField] private GameObject _sellerPanel;
-    private bool isSeller = false;
+    [SerializeField] private Slider _hpBar;
 
     [Header("Tag Attack Settings")]
     [SerializeField] public float attackRadius = 10f;
@@ -37,11 +36,11 @@ public class Mainch : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         if (rb == null)
         {
-            Debug.LogError("Rigidbody2D не знайдений на об'єкті!");
+            Debug.LogError("Rigidbody2D пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ'пїЅпїЅпїЅ!");
         }
         if (joystick == null)
         {
-            Debug.LogWarning("Joystick не встановлений в інспекторі!");
+            Debug.LogWarning("Joystick пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!");
         }
         nextAttackAvailableTime = Time.time;    
     }
@@ -67,12 +66,15 @@ public class Mainch : MonoBehaviour
     }
     public virtual void Init(int health, int damage, float critCh, float critDamage)
     {
+
         maxHealth = health;
         skill_baseDMG = damage;
         skill_critChance = critCh;
         skill_critDMG = critDamage;
-
         currentHealth = maxHealth;
+        _hpBar.maxValue = maxHealth;
+        _hpBar.value = currentHealth;
+        Canvas.ForceUpdateCanvases();
     }
     public virtual void Die()
     {
@@ -89,7 +91,7 @@ public class Mainch : MonoBehaviour
         if (IsDead) return;
 
         currentHealth -= Mathf.RoundToInt(damage);
-
+        _hpBar.value = currentHealth;
         if (currentHealth <= 0) Die();
     }
     protected virtual int CalculateDamage()
@@ -124,16 +126,16 @@ public class Mainch : MonoBehaviour
             {
                 int damage = CalculateDamage();
                 enemyComponent.TakeDMG(damage);
-                Debug.Log($"Атаковано {closestEnemyObject.name} (тег '{EnemyTag}') з шкодою {damage}.");
+                Debug.Log($"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ {closestEnemyObject.name} (пїЅпїЅпїЅ '{EnemyTag}') пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ {damage}.");
             }
             else
             {
-                Debug.LogWarning($"Знайдено об'єкт '{closestEnemyObject.name}' з тегом '{EnemyTag}', але на ньому немає компонента 'Enemy'.");
+                Debug.LogWarning($"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ'пїЅпїЅпїЅ '{closestEnemyObject.name}' пїЅ пїЅпїЅпїЅпїЅпїЅ '{EnemyTag}', пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 'Enemy'.");
             }
         }
         else
         {
-            Debug.Log($"Ціль з тегом '{EnemyTag}' в радіусі {attackRadius} не знайдена.");
+            Debug.Log($"ЦіпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ '{EnemyTag}' пїЅ пїЅпїЅпїЅпїЅпїЅ {attackRadius} пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.");
         }
     }
     public GameObject FindClosestEnemyObjectByTag()
@@ -164,19 +166,14 @@ public class Mainch : MonoBehaviour
         else currentHealth += health;
     }
 
-    //Seller Logic
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void AddHealth(int amount)
     {
-        if (collision.gameObject.tag == "Seller")
-        {
-            isSeller = true;    
-        }
+        currentHealth += amount;
+        if (currentHealth > maxHealth)
+            currentHealth = maxHealth;
+        _hpBar.value = currentHealth;
+        Debug.Log($"Player healed by {amount}. HP: {currentHealth}/{maxHealth}");
     }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Seller")
-        {
-            isSeller = false;
-        }
-    }
+
+
 }

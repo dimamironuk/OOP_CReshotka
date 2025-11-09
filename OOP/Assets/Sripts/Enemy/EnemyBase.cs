@@ -111,14 +111,31 @@ public abstract class EnemyBase : MonoBehaviour
         }
     }
 
-    public virtual void Die()
-    {
-        currentState = State.Dead;
-        rb.velocity = Vector2.zero;
-        Destroy(gameObject, 0.2f);
 
-        Debug.Log("Enemy is due!!!");
+    [Header("Loot Settings")]
+    public GameObject heartPrefab;
+
+    public float heartDropChance = 0.5f;
+
+
+    public void Die()
+    {
+        if (currentHealth <= 0)
+        {
+            TryDropHeart();
+            Destroy(gameObject);
+        }
     }
+
+
+    private void TryDropHeart()
+    {
+        if (heartPrefab != null && Random.value <= heartDropChance)
+        {
+            Instantiate(heartPrefab, transform.position, Quaternion.identity);
+        }
+    }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
