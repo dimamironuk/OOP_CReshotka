@@ -4,13 +4,19 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Mainch : MonoBehaviour, IDamagable
+public class Mainch : MonoBehaviour
 {
     public DynamicJoystick joystick;
     public float speed = 25f;
     Rigidbody2D rb;
     Vector2 direction;
     [SerializeField] private Slider _hpBar;
+
+    [Header("Tag Attack Settings")]
+    [SerializeField] public float attackRadius = 10f;
+    [SerializeField] private string EnemyTag = "Enemy";
+    [SerializeField] private float attackCooldownDuration = 1f;
+    private float nextAttackAvailableTime = 0f;
 
     [Header("Base stats")]
     [SerializeField] protected int maxHealth;
@@ -36,6 +42,7 @@ public class Mainch : MonoBehaviour, IDamagable
         {
             Debug.LogWarning("Joystick �� ������������ � ���������!");
         }
+        nextAttackAvailableTime = Time.time;    
     }
     protected virtual void FixedUpdate()
     {
@@ -51,7 +58,11 @@ public class Mainch : MonoBehaviour, IDamagable
             float yRotation = (direction.x >= 0f) ? 180f : 0f;
             transform.rotation = Quaternion.Euler(0, yRotation, 0);
         }
-       
+        if (isSeller && Input.GetKeyDown(KeyCode.E))
+        {
+            _sellerPanel.SetActive(true);
+        }
+
     }
     public virtual void Init(int health, int damage, float critCh, float critDamage)
     {
@@ -70,15 +81,13 @@ public class Mainch : MonoBehaviour, IDamagable
         if (IsDead)
         {
             currentHealth = 0;
-            Debug.Log($"{gameObject.name} ����!");
+            Debug.Log($"{gameObject.name} died!");
             OnDeath?.Invoke();
             Application.LoadLevel(Application.loadedLevel);
         }
     }
     public virtual void TakeDMG(float damage)
     {
-        Debug.Log($"��������");
-
         if (IsDead) return;
 
         currentHealth -= Mathf.RoundToInt(damage);
@@ -94,12 +103,61 @@ public class Mainch : MonoBehaviour, IDamagable
         }
         return damage;
     }
-    public virtual void Attack(IDamagable target)
+    public void PerformCooldownAttack()
     {
-        int damage = CalculateDamage();
-        target.TakeDMG(damage);
+        if (Time.time < nextAttackAvailableTime)
+        {
+            float remainingTime = nextAttackAvailableTime - Time.time;
+            Debug.LogWarning($"Cooldown. Remaining time: {remainingTime:F2} sec.");
+            return;
+        }
+        nextAttackAvailableTime = Time.time + attackCooldownDuration;
+        AttackClosestEnemyByTag();
     }
+    protected void AttackClosestEnemyByTag()
+    {
+        GameObject closestEnemyObject = FindClosestEnemyObjectByTag();
 
+        if (closestEnemyObject != null)
+        {
+            EnemyBase enemyComponent = closestEnemyObject.GetComponent<EnemyBase>();
+
+            if (enemyComponent != null)
+            {
+                int damage = CalculateDamage();
+                enemyComponent.TakeDMG(damage);
+                Debug.Log($"��������� {closestEnemyObject.name} (��� '{EnemyTag}') � ������ {damage}.");
+            }
+            else
+            {
+                Debug.LogWarning($"�������� ��'��� '{closestEnemyObject.name}' � ����� '{EnemyTag}', ��� �� ����� ���� ���������� 'Enemy'.");
+            }
+        }
+        else
+        {
+            Debug.Log($"ֳ�� � ����� '{EnemyTag}' � ����� {attackRadius} �� ��������.");
+        }
+    }
+    public GameObject FindClosestEnemyObjectByTag()
+    {
+        GameObject[] allEnemies = GameObject.FindGameObjectsWithTag(EnemyTag);
+
+        GameObject closestEnemyObject = null;
+        float minDistance = attackRadius + 1f;
+        Vector3 currentPosition = transform.position;
+
+        foreach (GameObject enemyObject in allEnemies)
+        {
+            float distanceToEnemy = Vector3.Distance(currentPosition, enemyObject.transform.position);
+
+            if (distanceToEnemy <= attackRadius && distanceToEnemy < minDistance)
+            {
+                minDistance = distanceToEnemy;
+                closestEnemyObject = enemyObject;
+            }
+        }
+        return closestEnemyObject;
+    }
     public virtual void GetHealth(int health)
     {
         if (health <= 0) return;
