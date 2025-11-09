@@ -9,29 +9,11 @@ public class SellerController : MonoBehaviour, IPointerClickHandler
     [SerializeField] private List<Product> _products;
     [SerializeField] private GameObject _sellerPanel;
     [SerializeField] private GameObject _menuPauseButton;
+    [SerializeField] private GameObject  _storageProduct;
     private bool _playerNear = false;
-    private void Start()
+    public void CreateProduct(Product[] products)
     {
-        _products = new List<Product>();
-
-        Product potion = CreateProduct("Мале зілля лікування", 50, "Відновлює 20 HP");
-        Product sword = CreateProduct("Залізний меч", 120, "Базова зброя ближнього бою");
-
-        _products.Add(potion);
-        _products.Add(sword);
-
-        foreach (var p in _products)
-        {
-            p.GetInfo();
-        }
-    }
-
-    private Product CreateProduct(string name, int price, string description)
-    {
-        GameObject go = new GameObject(name);
-        Product product = go.AddComponent<Product>();
-        product.Init(name, price, description);
-        return product;
+        _products.AddRange(products);
     }
 
     public void BuyProduct(int index)
@@ -46,16 +28,13 @@ public class SellerController : MonoBehaviour, IPointerClickHandler
         }
     }
     public Product GetProduct(int index) {
-        if (index > _products.Count || index < 0)
-        {
-            return CreateProduct("NONE",0,"NONE");
-        }
-        else
-        {
-            return _products[index];
-        }
-    }
+        return _products[index];
 
+    }
+    public int GetCountProduct()
+    {
+        return _products.Count;
+    }
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
@@ -63,7 +42,6 @@ public class SellerController : MonoBehaviour, IPointerClickHandler
             _playerNear = true;
         }
     }
-
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
@@ -77,6 +55,7 @@ public class SellerController : MonoBehaviour, IPointerClickHandler
         {
             _sellerPanel.SetActive(true);
             _menuPauseButton.SetActive(false);
+
         }
     }
 }
