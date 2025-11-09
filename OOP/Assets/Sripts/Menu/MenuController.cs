@@ -19,25 +19,39 @@ public class MenuController : MonoBehaviour
     public void ChooseProductInfo(int index)
     {
         SellerController seller = FindObjectOfType<SellerController>();
-        Product chooseProduct = seller.GetProduct(index);
+        if (seller == null) return;
+        if (index < 0 || index >= seller.GetCountProduct())
+        {
+            index = -1; 
+        }
 
+        Product chooseProduct = index >= 0 ? seller.GetProduct(index) : null;
         Image imageChooseProduct = GameObject.Find("I_ChoiceProduct")?.GetComponent<Image>();
         TextMeshProUGUI nameChooseProduct = GameObject.Find("T_NameChoiceProduct")?.GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI priceChooseProduct = GameObject.Find("T_PriceChoiceProduct")?.GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI infoChooseProduct = GameObject.Find("T_InfoChoiceProduct")?.GetComponent<TextMeshProUGUI>();
-        if (chooseProduct != null) { 
+
+        if (chooseProduct != null)
+        {
             imageChooseProduct.sprite = chooseProduct.GetImage();
             nameChooseProduct.text = chooseProduct.GetName();
-            priceChooseProduct.text = "Price: "+chooseProduct.GetPrice().ToString();
+            priceChooseProduct.text = "Price: " + chooseProduct.GetPrice().ToString();
             infoChooseProduct.text = chooseProduct.GetDescription();
+            Color c = imageChooseProduct.color;
+            c.a = 1f;
+            imageChooseProduct.color = c;
         }
         else
         {
-            nameChooseProduct.text = "None";
-            priceChooseProduct.text = "Price: 0";
-            infoChooseProduct.text = "None";
+            Color c = imageChooseProduct.color;
+            c.a = 0f;
+            imageChooseProduct.color = c;
+            nameChooseProduct.text = "";
+            priceChooseProduct.text = "";
+            infoChooseProduct.text = "";
         }
     }
+
     //Menu Pause
     public void OpenMenuPausePanel()
     {
