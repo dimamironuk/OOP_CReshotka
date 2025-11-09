@@ -29,11 +29,11 @@ public class Mainch : MonoBehaviour, IDamagable
         rb = GetComponent<Rigidbody2D>();
         if (rb == null)
         {
-            Debug.LogError("Rigidbody2D не знайдений на об'єкті!");
+            Debug.LogError("Rigidbody2D пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ'пїЅпїЅпїЅ!");
         }
         if (joystick == null)
         {
-            Debug.LogWarning("Joystick не встановлений в інспекторі!");
+            Debug.LogWarning("Joystick пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!");
         }
     }
     protected virtual void FixedUpdate()
@@ -66,14 +66,14 @@ public class Mainch : MonoBehaviour, IDamagable
         if (IsDead)
         {
             currentHealth = 0;
-            Debug.Log($"{gameObject.name} вмер!");
+            Debug.Log($"{gameObject.name} пїЅпїЅпїЅпїЅ!");
             OnDeath?.Invoke();
             Application.LoadLevel(Application.loadedLevel);
         }
     }
     public virtual void TakeDMG(float damage)
     {
-        Debug.Log($"работает");
+        Debug.Log($"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
 
         if (IsDead) return;
 
@@ -103,5 +103,15 @@ public class Mainch : MonoBehaviour, IDamagable
             currentHealth = maxHealth;
         else currentHealth += health;
     }
+
+    public void AddHealth(int amount)
+    {
+        currentHealth += amount;
+        if (currentHealth > maxHealth)
+            currentHealth = maxHealth;
+
+        Debug.Log($"Player healed by {amount}. HP: {currentHealth}/{maxHealth}");
+    }
+
 
 }
