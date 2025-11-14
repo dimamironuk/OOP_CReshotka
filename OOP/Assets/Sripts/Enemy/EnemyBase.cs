@@ -76,7 +76,7 @@ public abstract class EnemyBase : MonoBehaviour
     protected virtual void HandlePatrol()
     {
         if (!IsInvoking(nameof(ChooseNewDirection)))
-            InvokeRepeating(nameof(ChooseNewDirection), 0, 3f);
+            InvokeRepeating(nameof(ChooseNewDirection), 0, timePatrol);
 
         rb.velocity = patrolDirection * Speed;
     }
