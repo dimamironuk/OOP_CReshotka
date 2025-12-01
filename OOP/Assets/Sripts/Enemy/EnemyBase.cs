@@ -2,29 +2,29 @@ using UnityEngine;
 
 public abstract class EnemyBase : MonoBehaviour
 {
-    [Header("Stats")]
-    public int maxHealth = 100;
-    public int currentHealth;
-    public float Speed = 3.5f;
+    [HideInInspector] protected int maxHealth;
+    [HideInInspector] protected float speed;
+    
+    [HideInInspector] protected float sightRange;
+    [HideInInspector] protected float attackRange;
+    
+    [HideInInspector] protected float radiusPatrol;
+    [HideInInspector] protected float timePatrol;
 
-    [Header("Target")]
-    public float sightRange = 8f;
-    public float attackRange = 1.5f;
-
-    [Header("Patrol")]
-    public float radiusPatrol = 6f;
-    public float timePatrol = 2f;
-
+    [HideInInspector] public int currentHealth;
     protected Transform target;
     protected Rigidbody2D rb;
 
     protected enum State { Patrol, Chase, Attack, Dead }
     protected State currentState;
-
     private Vector2 patrolDirection = Vector2.zero;
+
+    protected abstract void SetStats(); 
 
     protected virtual void Awake()
     {
+        SetStats(); 
+        
         currentHealth = maxHealth;
     }
 
@@ -78,7 +78,7 @@ public abstract class EnemyBase : MonoBehaviour
         if (!IsInvoking(nameof(ChooseNewDirection)))
             InvokeRepeating(nameof(ChooseNewDirection), 0, timePatrol);
 
-        rb.velocity = patrolDirection * Speed;
+        rb.velocity = patrolDirection * speed; 
     }
 
     private void ChooseNewDirection()
@@ -90,7 +90,7 @@ public abstract class EnemyBase : MonoBehaviour
     {
         if (target == null) return;
         Vector2 dir = (target.position - transform.position).normalized;
-        rb.velocity = dir * Speed;
+        rb.velocity = dir * speed;
     }
 
     protected virtual void HandleAttack()
@@ -104,19 +104,12 @@ public abstract class EnemyBase : MonoBehaviour
     public void TakeDMG(float damageAmount)
     {
         currentHealth -= (int)damageAmount;
-
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
+        if (currentHealth <= 0) Die();
     }
 
-
     [Header("Loot Settings")]
-    public GameObject heartPrefab;
-
-    public float heartDropChance = 0.5f;
-
+    [SerializeField] protected GameObject heartPrefab; 
+    [SerializeField] protected float heartDropChance = 0.5f;
 
     public void Die()
     {
@@ -127,7 +120,6 @@ public abstract class EnemyBase : MonoBehaviour
         }
     }
 
-
     private void TryDropHeart()
     {
         if (heartPrefab != null && Random.value <= heartDropChance)
@@ -136,8 +128,7 @@ public abstract class EnemyBase : MonoBehaviour
         }
     }
 
-
-    private void OnCollisionEnter2D(Collision2D collision)
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Wall"))
         {
