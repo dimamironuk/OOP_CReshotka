@@ -4,7 +4,6 @@ using UnityEngine;
 
 public enum Rarity
 {
-
     Common,
     Uncommon,
     Rare,
@@ -16,5 +15,5 @@ public enum Rarity
 public interface IItmes
 {
     Rarity ItemRarity { get; set; }
-    public Product GetItem();
+    Product GetItem();
 }

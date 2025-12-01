@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class Mainch : MonoBehaviour, IDamagable
 {
     public DynamicJoystick joystick;
-    public float speed = 25f;
+    public float speed = 10f;
     Rigidbody2D rb;
     Vector2 direction;
     [SerializeField] private Slider _hpBar;
@@ -48,18 +48,20 @@ public class Mainch : MonoBehaviour, IDamagable
     {
         if (joystick == null || rb == null)
             return;
-        direction = Vector2.up * joystick.Vertical + Vector2.right * joystick.Horizontal;
-        rb.AddForce(direction * speed * Time.deltaTime, ForceMode2D.Impulse);
+
+        direction = new Vector2(joystick.Horizontal, joystick.Vertical).normalized;
+        rb.velocity = direction * speed;
     }
+
     protected virtual void Update()
     {
-        if (direction != Vector2.zero)
+        if (direction.sqrMagnitude > 0.01f)
         {
-            float yRotation = (direction.x >= 0f) ? 180f : 0f;
-            transform.rotation = Quaternion.Euler(0, yRotation, 0);
+            var sr = GetComponent<SpriteRenderer>();
+            sr.flipX = (direction.x > 0f);
         }
-       
     }
+
     public virtual void Init(int health, int damage, float critCh, float critDamage)
     {
 

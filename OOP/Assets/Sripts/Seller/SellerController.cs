@@ -15,7 +15,6 @@ public class SellerController : MonoBehaviour, IPointerClickHandler
     {
         _products.AddRange(products);
     }
-
     public void BuyProduct(int index)
     {
         if(index > _products.Count || index < 0)
@@ -35,8 +34,6 @@ public class SellerController : MonoBehaviour, IPointerClickHandler
         }
         return _products[index];
     }
-
-
     public int GetCountProduct()
     {
         return _products.Count;
