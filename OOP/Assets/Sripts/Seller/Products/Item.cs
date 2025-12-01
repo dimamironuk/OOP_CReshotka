@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public enum Rarity
 {
     Common,
@@ -15,5 +16,10 @@ public enum Rarity
 public interface IItmes
 {
     Rarity ItemRarity { get; set; }
-    Product GetItem();
+}
+
+public class Item : MonoBehaviour, IItmes
+{
+    public Rarity ItemRarity { get; set; }
+
 }

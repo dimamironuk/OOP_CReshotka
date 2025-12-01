@@ -6,10 +6,9 @@ using UnityEngine.EventSystems;
 public class SellerController : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private string _nameSeller;
-    [SerializeField] private List<Product> _products;
-    [SerializeField] private GameObject _sellerPanel;
-    [SerializeField] private GameObject _menuPauseButton;
-    [SerializeField] private GameObject  _storageProduct;
+    public List<Product> _products;
+    public GameObject _sellerPanel;
+    public GameObject _menuPauseButton;
     private bool _playerNear = false;
     public void CreateProduct(Product[] products)
     {

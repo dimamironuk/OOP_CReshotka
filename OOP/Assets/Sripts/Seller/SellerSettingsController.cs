@@ -5,17 +5,20 @@ using UnityEngine.UI;
 
 public class SellerSettingsController : MonoBehaviour
 {
-    [SerializeField] private SellerController _seller;
+    [SerializeField] private List<SellerController> _seller;
     [SerializeField] private Button[] _buttons;
     [SerializeField] private GameObject _storageProduct;
     private void Awake()
     {
-        _seller.CreateProduct(_storageProduct.GetComponentsInChildren<Product>(includeInactive: true));
+        for (int i = 0; i < _seller.Count; i++)
+        {
+            List<Product> products = GenerationProducts(i);
+        }
     }
     private void Start()
     {
 
-        for (int i = 0; i < _seller.GetCountProduct() && i < _buttons.Length; i++)
+       /* for (int i = 0; i < _seller.GetCountProduct() && i < _buttons.Length; i++)
         {
             Image[] images = _buttons[i].GetComponentsInChildren<Image>(true);
             switch (_seller.GetProduct(i).ItemRarity)
@@ -52,10 +55,21 @@ public class SellerSettingsController : MonoBehaviour
             }
             if (childImage != null)
             {
-                childImage.sprite = _seller.GetProduct(i).GetImage();
+               // childImage.sprite = _seller.GetProduct(i).GetImage();
                 childImage.color = Color.white; 
             }
             
-        }
+        }*/
     }
+
+    public List<Product> GenerationProducts(int indexSeller)
+    {
+        List<Product> products = new List<Product>();
+        int randCountProducts = Random.Range(1, 10);
+        for (int i = 0; i < randCountProducts; i++) {
+            products.Add(new Product());
+        }
+        return products;
+    }
+
 }
