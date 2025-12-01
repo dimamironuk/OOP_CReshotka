@@ -10,8 +10,11 @@ public class ExplosiveEnemy : EnemyBase
     {
         if(collision.gameObject.tag == "Player")
         {
-            collision.gameObject.GetComponent<Mainch>().TakeDMG(damage);
-            Debug.Log("ok");
+            MainController playerController = collision.gameObject.GetComponent<MainController>();
+            if(playerController != null )
+            {
+                playerController.TakeDMG(damage);
+            }
 
             Destroy(gameObject);
         }
@@ -27,10 +30,10 @@ public class ExplosiveEnemy : EnemyBase
         {
             if (hit.CompareTag("Player"))
             {
-                Mainch player = hit.GetComponent<Mainch>();
-                if (player != null)
+                MainController playerController = hit.GetComponent<MainController>();
+                if (playerController != null)
                 {
-                    player.TakeDMG(damage);
+                    playerController.TakeDMG(damage);
                 }
             }
         }
