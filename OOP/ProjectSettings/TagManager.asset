@@ -7,6 +7,10 @@ TagManager:
   - Wall
   - Enemy
   - Seller
+  - Block
+  - RoomPoint
+  - Rooms
+  - Center
   layers:
   - Default
   - TransparentFX

@@ -34,7 +34,12 @@ public sealed class SpawnerController : MonoBehaviour
 
         for (int i = 0; i < enemiesPerWave; i++)
         {
-            
+            if (enemyPrefab == null)
+            {
+                Debug.LogError("Enemy NULL");
+                return;
+            }
+
             var pos = transform.position;
             var enemyGO = Instantiate(enemyPrefab, pos, Quaternion.identity);
             enemyGO.name = $"Enemy_W{_waveIndex:D2}_{i:D2}";

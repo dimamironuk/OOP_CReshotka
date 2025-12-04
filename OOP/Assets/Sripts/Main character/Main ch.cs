@@ -1,167 +1,147 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
-public class Mainch : MonoBehaviour, IDamagable
+public struct CharacterStats
 {
-    public DynamicJoystick joystick;
-    public float speed = 25f;
-    Rigidbody2D rb;
-    Vector2 direction;
-    [SerializeField] private Slider _hpBar;
+    public int maxHealth;
+    public int attackDamage;
+    public int skillDamage;
+    public float critChance;
+    public float critDamage;
+    public float skillCooldownDuration;
+    public SkillExecutionType executionType;
+}
 
-    [Header("Tag Attack Settings")]
-    [SerializeField] public float attackRadius = 10f;
-    [SerializeField] private string EnemyTag = "Enemy";
-    [SerializeField] private float attackCooldownDuration = 1f;
+public abstract class MainCharacter
+{
+    public Action<int, int> OnHealthStatsChanged;
+    public Action OnDeathOccurred;
+    public Action<int> OnAttackRequested;
+    public Action<int, SkillExecutionType> OnSkillRequested;
+    public int MaxHealth { get; private set; }
+    public int CurrentHealth { get; private set; }
+    public bool IsDead => CurrentHealth <= 0;
+
+    protected CharacterStats Stats { get; private set; }
+
+    private float attackCooldownDuration;
     private float nextAttackAvailableTime = 0f;
 
-    [Header("Base stats")]
-    [SerializeField] protected int maxHealth;
-    [SerializeField] protected int skill_baseDMG;
-    [SerializeField, Range(0.0f, 1.0f)] protected float skill_critChance;
-    [SerializeField] protected float skill_critDMG;
-    [SerializeField] protected int currentHealth;
+    private float skillCooldownDuration;
+    protected float nextSkillAvailableTime = 0f;
 
-    public bool IsDead => currentHealth <= 0;
-    public event System.Action OnDeath;
-    void Awake()
-    {
-        gameObject.tag = "Player";
-    }
-    protected virtual void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
-        if (rb == null)
-        {
-            Debug.LogError("Rigidbody2D ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½'ï¿½ï¿½ï¿½!");
-        }
-        if (joystick == null)
-        {
-            Debug.LogWarning("Joystick ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!");
-        }
-        nextAttackAvailableTime = Time.time;
-    }
-    protected virtual void FixedUpdate()
-    {
-        if (joystick == null || rb == null)
-            return;
-        direction = Vector2.up * joystick.Vertical + Vector2.right * joystick.Horizontal;
-        rb.AddForce(direction * speed * Time.deltaTime, ForceMode2D.Impulse);
-    }
-    protected virtual void Update()
-    {
-        if (direction != Vector2.zero)
-        {
-            float yRotation = (direction.x >= 0f) ? 180f : 0f;
-            transform.rotation = Quaternion.Euler(0, yRotation, 0);
-        }
-       
-    }
-    public virtual void Init(int health, int damage, float critCh, float critDamage)
-    {
+    protected int attack_baseDamage;
+    protected int skill_baseDamage;
+    protected float critChance;
+    protected float critDamage;
 
-        maxHealth = health;
-        skill_baseDMG = damage;
-        skill_critChance = critCh;
-        skill_critDMG = critDamage;
-        currentHealth = maxHealth;
-        _hpBar.maxValue = maxHealth;
-        _hpBar.value = currentHealth;
-        Canvas.ForceUpdateCanvases();
+    protected abstract CharacterStats GetInitialStats();
+
+    public MainCharacter(float cooldownAttackDuration, float cooldownSkillDuration)
+    {
+        this.attackCooldownDuration = cooldownAttackDuration;
+        this.skillCooldownDuration = cooldownSkillDuration;
+
+        this.Stats = GetInitialStats();
+
+        this.MaxHealth = this.Stats.maxHealth;
+        this.CurrentHealth = this.Stats.maxHealth;
+        this.skill_baseDamage = this.Stats.skillDamage;
+        this.attack_baseDamage = this.Stats.attackDamage;
+        this.critChance = this.Stats.critChance;
+        this.critDamage = this.Stats.critDamage;
+
+        NotifyHealthStatsChanged();
+    }
+
+    public virtual void TakeDMG(float damage)
+    {
+        if (IsDead) return;
+
+        CurrentHealth -= Mathf.RoundToInt(damage);
+
+        NotifyHealthStatsChanged();
+
+        if (CurrentHealth <= 0) Die();
+    }
+
+    public virtual int CalculateAttackDamage()
+    {
+        int damage = this.Stats.attackDamage;
+
+        if (UnityEngine.Random.value <= this.Stats.critChance)
+        {
+            damage = Mathf.RoundToInt(damage * this.Stats.critDamage);
+            Debug.Log($"CRITICAL HIT! Damage: {damage}");
+        }
+        return damage;
+    }
+    //          #################################################################33          ÏÅÐÅÄÅËÀÒÜ îäíî è òî æå áóêâàëüíî 
+    public virtual int CalculateSkillDamage()
+    {
+        int damage = this.Stats.skillDamage;
+
+        if (UnityEngine.Random.value <= this.Stats.critChance)
+        {
+            damage = Mathf.RoundToInt(damage * this.Stats.critDamage);
+            Debug.Log($"CRITICAL HIT! Damage: {damage}");
+        }
+        return damage;
+    }
+
+    public void AddHealth(int amount)
+    {
+        if (amount <= 0) return;
+
+        CurrentHealth += amount;
+        if (CurrentHealth > MaxHealth)
+            CurrentHealth = MaxHealth;
+
+        NotifyHealthStatsChanged();
+        Debug.Log($"Player healed by {amount}. HP: {CurrentHealth}/{MaxHealth}");
     }
     public virtual void Die()
     {
         if (IsDead)
         {
-            currentHealth = 0;
-            Debug.Log($"{gameObject.name} ï¿½ï¿½ï¿½ï¿½!");
-            OnDeath?.Invoke();
-            Application.LoadLevel(Application.loadedLevel);
-        }
-    }
-    public virtual void TakeDMG(float damage)
-    {
-        if (IsDead) return;
+            CurrentHealth = 0;
+            Debug.Log($"Character died!");
+            NotifyHealthStatsChanged();
 
-        currentHealth -= Mathf.RoundToInt(damage);
-        _hpBar.value = currentHealth;
-        if (currentHealth <= 0) Die();
-    }
-    protected virtual int CalculateDamage()
-    {
-        int damage = skill_baseDMG;
-        if (Random.value <= skill_critChance)
-        {
-            damage *= Mathf.RoundToInt(skill_critDMG);
+            OnDeathOccurred?.Invoke();
         }
-        return damage;
     }
-    public void PerformCooldownAttack()
+
+    public void TryPerformAttack(float currentTime)
     {
-        if (Time.time < nextAttackAvailableTime)
+        if (currentTime < nextAttackAvailableTime)
         {
-            float remainingTime = nextAttackAvailableTime - Time.time;
-            Debug.LogWarning($"Cooldown. Remaining time: {remainingTime:F2} sec.");
+            float remainingTime = nextAttackAvailableTime - currentTime;
+            Debug.LogWarning($"Cooldown ATTACK. Remaining time: {remainingTime:F2} sec.");
             return;
         }
-        nextAttackAvailableTime = Time.time + attackCooldownDuration;
-        AttackClosestEnemyByTag();
+
+        nextAttackAvailableTime = currentTime + attackCooldownDuration;
+
+        OnAttackRequested?.Invoke(CalculateAttackDamage());
     }
-    protected void AttackClosestEnemyByTag()
+    public void TryPerformSkill(float currentTime)
     {
-        GameObject closestEnemyObject = FindClosestEnemyObjectByTag();
-
-        if (closestEnemyObject != null)
+        if (currentTime < nextSkillAvailableTime)
         {
-            EnemyBase enemyComponent = closestEnemyObject.GetComponent<EnemyBase>();
+            float remainingTime = nextSkillAvailableTime - currentTime;
+            Debug.LogWarning($"Cooldown SKKILL. Remaining time: {remainingTime:F2} sec.");
+            return;
+        }
 
-            if (enemyComponent != null)
-            {
-                int damage = CalculateDamage();
-                enemyComponent.TakeDMG(damage);
-                Debug.Log($"Attacked {closestEnemyObject.name} (teg '{EnemyTag}') amount {damage}.");
-            }
-            else
-            {
-                Debug.LogWarning($"Found object '{closestEnemyObject.name}' teg '{EnemyTag}', but there is no enemy.");
-            }
-        }
-        else
-        {
-            Debug.Log($"Teg '{EnemyTag}' in radius {attackRadius} not found.");
-        }
+        nextSkillAvailableTime = currentTime + skillCooldownDuration;
+
+        OnSkillRequested?.Invoke(CalculateSkillDamage(), this.Stats.executionType);
     }
-    public GameObject FindClosestEnemyObjectByTag()
+    public abstract void PerformSkillAttack(float currentTime);
+
+    private void NotifyHealthStatsChanged()
     {
-        GameObject[] allEnemies = GameObject.FindGameObjectsWithTag(EnemyTag);
-
-        GameObject closestEnemyObject = null;
-        float minDistance = attackRadius + 1f;
-        Vector3 currentPosition = transform.position;
-
-        foreach (GameObject enemyObject in allEnemies)
-        {
-            float distanceToEnemy = Vector3.Distance(currentPosition, enemyObject.transform.position);
-
-            if (distanceToEnemy <= attackRadius && distanceToEnemy < minDistance)
-            {
-                minDistance = distanceToEnemy;
-                closestEnemyObject = enemyObject;
-            }
-        }
-        return closestEnemyObject;
+        OnHealthStatsChanged?.Invoke(CurrentHealth, MaxHealth);
     }
-    public void AddHealth(int amount)
-    {
-        currentHealth += amount;
-        if (currentHealth > maxHealth)
-            currentHealth = maxHealth;
-        _hpBar.value = currentHealth;
-        Debug.Log($"Player healed by {amount}. HP: {currentHealth}/{maxHealth}");
-    }
-
-
 }

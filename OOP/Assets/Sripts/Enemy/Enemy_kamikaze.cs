@@ -25,18 +25,19 @@ public class ExplosiveEnemy : EnemyBase
         attackRange = _attackRange;
         radiusPatrol = _patrolRadius;
         timePatrol = _patrolTime;
+
+        if(collision.gameObject.tag == "Player")
+        {
+            MainController playerController = collision.gameObject.GetComponent<MainController>();
+            if(playerController != null )
+            {
+                playerController.TakeDMG(damage);
+            }
+
+            Destroy(gameObject);
+        }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-{
-if(collision.gameObject.tag == "Player")
-{
-collision.gameObject.GetComponent<Mainch>().TakeDMG(damage);
-Debug.Log("ok");
-
-Destroy(gameObject);
-}
-}
 
     protected override void OnAttack() 
     {
@@ -49,10 +50,10 @@ Destroy(gameObject);
         {
             if (hit.CompareTag("Player"))
             {
-                Mainch player = hit.GetComponent<Mainch>();
-                if (player != null)
+                MainController playerController = hit.GetComponent<MainController>();
+                if (playerController != null)
                 {
-                    player.TakeDMG(damage);
+                    playerController.TakeDMG(damage);
                 }
             }
         }
