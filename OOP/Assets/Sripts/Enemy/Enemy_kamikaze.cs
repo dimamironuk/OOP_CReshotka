@@ -25,11 +25,15 @@ public class ExplosiveEnemy : EnemyBase
         attackRange = _attackRange;
         radiusPatrol = _patrolRadius;
         timePatrol = _patrolTime;
+    }
 
-        if(collision.gameObject.tag == "Player")
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+
+        if (collision.gameObject.tag == "Player")
         {
             MainController playerController = collision.gameObject.GetComponent<MainController>();
-            if(playerController != null )
+            if (playerController != null)
             {
                 playerController.TakeDMG(damage);
             }
@@ -37,7 +41,6 @@ public class ExplosiveEnemy : EnemyBase
             Destroy(gameObject);
         }
     }
-
 
     protected override void OnAttack() 
     {
