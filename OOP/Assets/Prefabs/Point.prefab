@@ -119,4 +119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: 0
-  isSpawned: 0
+  upFactory: {fileID: 11400000, guid: 6bd293a8fe9aea547847a6c2838ba11e, type: 2}
+  downFactory: {fileID: 11400000, guid: 4b9ff24bf0ae8dd48973534a6111bd69, type: 2}
+  leftFactory: {fileID: 11400000, guid: ac17640144c9e8e4fbfd5c748e778b59, type: 2}
+  rightFactory: {fileID: 11400000, guid: 62aed470c3e7d404f9d7729ca04ef9ff, type: 2}

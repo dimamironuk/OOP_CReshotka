@@ -6623,6 +6623,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1935737612}
   - component: {fileID: 1935737611}
+  - component: {fileID: 1935737614}
   - component: {fileID: 1935737610}
   - component: {fileID: 1935737613}
   m_Layer: 0
@@ -6722,6 +6723,21 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_MaxRayIntersections: 0
+--- !u!114 &1935737614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1935737609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57ddd091d166074419d49255acb55272, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1448424235}
+  smoothTime: 0.2
+  offset: {x: 0, y: 0, z: 0}
 --- !u!1 &1989608962
 GameObject:
   m_ObjectHideFlags: 0
@@ -7184,46 +7200,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2094079897}
-  - component: {fileID: 2094079896}
+  - component: {fileID: 2094079898}
   m_Layer: 0
-  m_Name: Rooms
+  m_Name: RoomLimiter
   m_TagString: Rooms
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2094079896
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2094079895}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d946622e8637ec5429546800bcbfb0ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  left:
-  - {fileID: 5045723102758220826, guid: ae5f939112aa32744b6a92aa67db38fe, type: 3}
-  - {fileID: 5045723102758220826, guid: c5f7ea9e6a2405341812b0d007ccea99, type: 3}
-  - {fileID: 5045723102758220826, guid: d8733d7846f5b4e47b6a8e88b0fec264, type: 3}
-  - {fileID: 5045723102758220826, guid: 4b5e8061b330ac7498ba8ecf0b4e6648, type: 3}
-  right:
-  - {fileID: 5045723102758220826, guid: a44dc54d6fd6f80498ad414d48ea3f12, type: 3}
-  - {fileID: 5045723102758220826, guid: 791b6f661ef954245b2b3a935132cc14, type: 3}
-  - {fileID: 5045723102758220826, guid: 4b5e8061b330ac7498ba8ecf0b4e6648, type: 3}
-  - {fileID: 5045723102758220826, guid: 566617067ba48034da0d132d36ace486, type: 3}
-  up:
-  - {fileID: 5045723102758220826, guid: 25644bdee9633fa4e9c5753bf7976100, type: 3}
-  - {fileID: 5045723102758220826, guid: 44f6b0a1084a33d41a63df633890af93, type: 3}
-  - {fileID: 5045723102758220826, guid: d8733d7846f5b4e47b6a8e88b0fec264, type: 3}
-  - {fileID: 5045723102758220826, guid: 566617067ba48034da0d132d36ace486, type: 3}
-  down:
-  - {fileID: 5045723102758220826, guid: 4b2ac29de54adfe4cbe2366ed317724c, type: 3}
-  - {fileID: 5045723102758220826, guid: c5f7ea9e6a2405341812b0d007ccea99, type: 3}
-  - {fileID: 5045723102758220826, guid: 25644bdee9633fa4e9c5753bf7976100, type: 3}
-  - {fileID: 5045723102758220826, guid: a44dc54d6fd6f80498ad414d48ea3f12, type: 3}
 --- !u!4 &2094079897
 Transform:
   m_ObjectHideFlags: 0
@@ -7239,6 +7223,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2094079898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2094079895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 524d666dfe77a004daca59dbbe44dab6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeSpawners: 0
 --- !u!1 &2098365143
 GameObject:
   m_ObjectHideFlags: 0
@@ -7535,3 +7532,6 @@ SceneRoots:
   - {fileID: 6655745584774668599}
   - {fileID: 882538240}
   - {fileID: 1414437098}
+  - {fileID: 7997858696405250516}
+  - {fileID: 1679957326}
+  - {fileID: 2094079897}
