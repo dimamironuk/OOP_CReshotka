@@ -4,56 +4,52 @@ using UnityEngine;
 
 public class SpawnRoomController : MonoBehaviour
 {
-    public enum Direction
-    {
-        Up, Down, Left, Right
-    }
-
+    public enum Direction { Up, Down, Left, Right }
     public Direction direction;
 
-    private RoomVariables _roomVariables;
-    public bool isSpawned = false;
+    public RoomFactory upFactory;
+    public RoomFactory downFactory;
+    public RoomFactory leftFactory;
+    public RoomFactory rightFactory;
 
+
+    private RoomLimiter roomLimiter;
     private void Start()
     {
-        _roomVariables = GameObject.FindGameObjectWithTag("Rooms").GetComponent<RoomVariables>();
-        Invoke(nameof(SpawnRoom),0.3f);
+        roomLimiter = FindAnyObjectByType<RoomLimiter>();
+        roomLimiter.activeSpawners++;
+        Invoke(nameof(SpawnRoom), 0.2f);
         Destroy(gameObject, 0.3f);
     }
 
     private void SpawnRoom()
     {
-        if (isSpawned) return;
-
-        GameObject roomToSpawn = null;
-
-        switch (direction)
+        RoomFactory factory = direction switch
         {
-            case Direction.Up:
-                roomToSpawn = _roomVariables.up[Random.Range(0, _roomVariables.up.Length)];
-                break;
+            Direction.Up => upFactory,
+            Direction.Down => downFactory,
+            Direction.Left => leftFactory,
+            Direction.Right => rightFactory,
+            _ => null
+        };
+        if (factory == null) return;
 
-            case Direction.Down:
-                roomToSpawn = _roomVariables.down[Random.Range(0, _roomVariables.down.Length)];
-                break;
-
-            case Direction.Left:
-                roomToSpawn = _roomVariables.left[Random.Range(0, _roomVariables.left.Length)];
-                break;
-
-            case Direction.Right:
-                roomToSpawn = _roomVariables.right[Random.Range(0, _roomVariables.right.Length)];
-                break;
-        }
-
-        Instantiate(roomToSpawn, transform.position, roomToSpawn.transform.rotation);
-        isSpawned = true;
-
+        GameObject roomInstance = Instantiate(factory.CreateRoom(), transform.position, Quaternion.identity);
+        Room room = roomInstance.AddComponent<Room>();
+        room.roomType = Room.RoomType.None;
+        roomLimiter.AddRoom(room);
     }
-
+    private void OnDestroy()
+    {
+        roomLimiter.activeSpawners--;
+        if (roomLimiter.activeSpawners == 0)
+        {
+            roomLimiter.AssignTypes();
+        }
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Center")
+        if (collision.CompareTag("Center"))
         {
             Destroy(gameObject);
         }
