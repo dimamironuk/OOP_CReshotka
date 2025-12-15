@@ -109,7 +109,7 @@ MonoBehaviour:
   _patrolRadius: 5
   _patrolTime: 2
   explosionRadius: 3
-  damage: 40
+  damage: 10
   explosionEffect: {fileID: 0}
 --- !u!50 &6289122429656405761
 Rigidbody2D:

@@ -58,12 +58,13 @@ public class RoomLimiter : MonoBehaviour
             
             switch (room.roomType)
             {
-                /*case Room.RoomType.Enemy:
-                    objSpawn = Resources.Load<GameObject>("spawner");
-                    objSpawn.GetComponent<SpawnerController>().enemyPrefab = Resources.Load<GameObject>("enemy_1");
-                    break;*/
+                case Room.RoomType.Enemy:
+                    objSpawn = Resources.Load<GameObject>("spawnerEnemy");
+                    objSpawn.GetComponent<EnemySpawner>().enemyPrefab = Resources.Load<GameObject>("enemy_1");
+                    break;
                 case Room.RoomType.Boss:
-                    objSpawn = Resources.Load<GameObject>("Boss");
+                    objSpawn = Resources.Load<GameObject>("spawneBoss");
+                    objSpawn.GetComponent<BossSpawner>().enemyPrefab = Resources.Load<GameObject>("BigGoblinPrefab");
                     break;
                 case Room.RoomType.Seller:
                     objSpawn = Resources.Load<GameObject>("Seller");
