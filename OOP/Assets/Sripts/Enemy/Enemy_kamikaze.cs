@@ -25,11 +25,11 @@ public class ExplosiveEnemy : EnemyBase
         attackRange = _attackRange;
         radiusPatrol = _patrolRadius;
         timePatrol = _patrolTime;
-
-   
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
+
         if (collision.gameObject.tag == "Player")
         {
             MainController playerController = collision.gameObject.GetComponent<MainController>();
