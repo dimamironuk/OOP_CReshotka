@@ -16,16 +16,25 @@ public class MenuController : MonoBehaviour
         _sellerPanel.SetActive(false);
         _menuPauseButton.SetActive(true);
     }
-    public void ChooseProductInfo(int index)
+    public static void ChooseProductInfo(int index, int idSeller)
     {
-        SellerController seller = FindObjectOfType<SellerController>();
-        if (seller == null) return;
-        if (index < 0 || index >= seller.GetCountProduct())
+        SellerController[] sellers = Resources.FindObjectsOfTypeAll<SellerController>();
+        if (sellers == null) return;
+
+        SellerController seller = null;
+        foreach (SellerController value in sellers)
         {
-            index = -1; 
+            if (value.GetId() == idSeller)
+            {
+                seller = value;
+                break;
+            }
         }
 
-        Product chooseProduct = index >= 0 ? seller.GetProduct(index) : null;
+        if (seller == null) return;
+
+        Product chooseProduct = (index >= 0 && index < seller.GetCountProduct()) ? seller.GetProduct(index) : null;
+
         Image imageChooseProduct = GameObject.Find("I_ChoiceProduct")?.GetComponent<Image>();
         TextMeshProUGUI nameChooseProduct = GameObject.Find("T_NameChoiceProduct")?.GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI priceChooseProduct = GameObject.Find("T_PriceChoiceProduct")?.GetComponent<TextMeshProUGUI>();
@@ -52,6 +61,7 @@ public class MenuController : MonoBehaviour
         }
     }
 
+
     //Menu Pause
     public void OpenMenuPausePanel()
     {
@@ -68,6 +78,7 @@ public class MenuController : MonoBehaviour
 
     public void ButtonGoMainMenu()
     {
+        Time.timeScale = 1.0f;
         Application.LoadLevel(0);
     }
 

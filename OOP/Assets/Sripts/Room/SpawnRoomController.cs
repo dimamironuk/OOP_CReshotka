@@ -11,9 +11,9 @@ public class SpawnRoomController : MonoBehaviour
     public RoomFactory downFactory;
     public RoomFactory leftFactory;
     public RoomFactory rightFactory;
-
-
     private RoomLimiter roomLimiter;
+
+    private bool isTouch = false;
     private void Start()
     {
         roomLimiter = FindAnyObjectByType<RoomLimiter>();
@@ -34,10 +34,13 @@ public class SpawnRoomController : MonoBehaviour
         };
         if (factory == null) return;
 
-        GameObject roomInstance = Instantiate(factory.CreateRoom(), transform.position, Quaternion.identity);
-        Room room = roomInstance.AddComponent<Room>();
-        room.roomType = Room.RoomType.None;
-        roomLimiter.AddRoom(room);
+        if (!isTouch)
+        {
+            GameObject roomInstance = Instantiate(factory.CreateRoom(), transform.position, Quaternion.identity);
+            Room room = roomInstance.AddComponent<Room>();
+            room.roomType = Room.RoomType.None;
+            roomLimiter.AddRoom(room);
+        }
     }
     private void OnDestroy()
     {
@@ -51,6 +54,7 @@ public class SpawnRoomController : MonoBehaviour
     {
         if (collision.CompareTag("Center"))
         {
+            isTouch = true;
             Destroy(gameObject);
         }
     }

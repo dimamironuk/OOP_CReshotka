@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class MainController : MonoBehaviour
 {
     public DynamicJoystick joystick;
-    public float speed = 25f;
+    public float speed = 5f;
     private MainCharacter characterLogic;
     private Rigidbody2D rb;
     private Vector2 direction;
@@ -54,13 +54,14 @@ public class MainController : MonoBehaviour
     void FixedUpdate()
     {
         if (joystick == null || rb == null) return;
-
-        direction = Vector2.up * joystick.Vertical + Vector2.right * joystick.Horizontal;
-        rb.AddForce(direction * speed * Time.deltaTime, ForceMode2D.Impulse);
+        Vector2 targetVelocity = direction.normalized * speed;
+        rb.velocity = Vector2.Lerp(rb.velocity, targetVelocity, 5f*Time.fixedDeltaTime);
     }
 
     void Update()
     {
+        direction = new Vector2(joystick.Horizontal, joystick.Vertical);
+
         if (direction != Vector2.zero)
         {
             float yRotation = (direction.x >= 0f) ? 180f : 0f;

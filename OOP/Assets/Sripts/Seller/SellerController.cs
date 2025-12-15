@@ -5,12 +5,35 @@ using UnityEngine.EventSystems;
 
 public class SellerController : MonoBehaviour, IPointerClickHandler
 {
+    [SerializeField] private int id;
     [SerializeField] private string _nameSeller;
     [SerializeField] private List<Product> _products;
     [SerializeField] private GameObject _sellerPanel;
     [SerializeField] private GameObject _menuPauseButton;
-    [SerializeField] private GameObject  _storageProduct;
+    [SerializeField] private SellerSettingsController _settingsController;
     private bool _playerNear = false;
+
+    private void Awake()
+    {
+        _settingsController = GameObject.FindGameObjectWithTag("SellerSetting").GetComponent<SellerSettingsController>();
+        _menuPauseButton = GameObject.FindGameObjectWithTag("MenuPause");
+    }
+    public void SetSellerPanel(GameObject sellerPanel)
+    {
+        _sellerPanel = sellerPanel;
+    }
+    public void SetName(string name)
+    {
+        _nameSeller = name;
+    }
+    public void SetId(int id)
+    {
+        this.id = id;
+    }
+    public int GetId()
+    {
+        return id;
+    }
     public void CreateProduct(Product[] products)
     {
         _products.AddRange(products);
@@ -58,7 +81,7 @@ public class SellerController : MonoBehaviour, IPointerClickHandler
         {
             _sellerPanel.SetActive(true);
             _menuPauseButton.SetActive(false);
-
+            _settingsController.ViewProductSeller(this);
         }
     }
 }
