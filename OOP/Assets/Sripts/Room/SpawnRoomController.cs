@@ -19,7 +19,7 @@ public class SpawnRoomController : MonoBehaviour
         roomLimiter = FindAnyObjectByType<RoomLimiter>();
         roomLimiter.activeSpawners++;
         Invoke(nameof(SpawnRoom), 0.2f);
-        Destroy(gameObject, 0.3f);
+        Destroy(gameObject, 0.5f);
     }
 
     private void SpawnRoom()
