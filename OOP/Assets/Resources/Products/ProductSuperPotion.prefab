@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 2831089769262769246}
   - component: {fileID: 897923640902728208}
   m_Layer: 0
-  m_Name: ProductPotion
+  m_Name: ProductSuperPotion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1559654918044949824
 Transform:
   m_ObjectHideFlags: 0
@@ -45,11 +45,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29a9fe09aec438d4593fd0f19d73bdfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Potion HP
-  _price: 5
+  _name: Super Potion HP
+  _idSeller: 0
+  _price: 10
   _description: "Healing Potion A clear blue liquid that glows with a soft glow.
     One sip and wounds begin to heal, pain subsides, and strength returns. Alchemists
     call it the \u201Cbreath of life\u201D"
+  _icon: {fileID: 21300000, guid: 614a50d883450fd47b71db549d7cec32, type: 3}
+  _rarity: 0
 --- !u!212 &897923640902728208
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -91,7 +94,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f669e399f5df597418dcc067dc457f81, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 614a50d883450fd47b71db549d7cec32, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

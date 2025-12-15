@@ -11,6 +11,10 @@ TagManager:
   - RoomPoint
   - Rooms
   - Center
+  - SellerSetting
+  - SellerPanel
+  - MenuPause
+  - GeneratorProducts
   layers:
   - Default
   - TransparentFX

@@ -1,24 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SellerSettingsController : MonoBehaviour
 {
-    [SerializeField] private SellerController _seller;
     [SerializeField] private Button[] _buttons;
-    [SerializeField] private GameObject _storageProduct;
-    private void Awake()
+    public void ViewProductSeller(SellerController seller)
     {
-        _seller.CreateProduct(_storageProduct.GetComponentsInChildren<Product>(includeInactive: true));
-    }
-    private void Start()
-    {
-
-        for (int i = 0; i < _seller.GetCountProduct() && i < _buttons.Length; i++)
+        ClearButtons();
+        for (int i = 0; i < seller.GetCountProduct() && i < _buttons.Length; i++)
         {
             Image[] images = _buttons[i].GetComponentsInChildren<Image>(true);
-            switch (_seller.GetProduct(i).ItemRarity)
+            switch (seller.GetProduct(i).ItemRarity)
             {
                 case Rarity.Common:
                     _buttons[i].image.color = new Color(160f / 255f, 160f / 255f, 160f / 255f);
@@ -52,10 +48,45 @@ public class SellerSettingsController : MonoBehaviour
             }
             if (childImage != null)
             {
-                childImage.sprite = _seller.GetProduct(i).GetImage();
-                childImage.color = Color.white; 
+                childImage.sprite = seller.GetProduct(i).GetImage();
+                childImage.color = Color.white;
             }
-            
+            SetButtonInfo(i, seller.GetId());
         }
+    }
+    private void ClearButtons()
+    {
+        Image imageChooseProduct = GameObject.Find("I_ChoiceProduct")?.GetComponent<Image>();
+        TextMeshProUGUI nameChooseProduct = GameObject.Find("T_NameChoiceProduct")?.GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI priceChooseProduct = GameObject.Find("T_PriceChoiceProduct")?.GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI infoChooseProduct = GameObject.Find("T_InfoChoiceProduct")?.GetComponent<TextMeshProUGUI>();
+        Color c = imageChooseProduct.color;
+        c.a = 0f;
+        imageChooseProduct.color = c;
+        nameChooseProduct.text = "";
+        priceChooseProduct.text = "";
+        infoChooseProduct.text = "";
+
+        foreach (Button btn in _buttons)
+        {
+            btn.onClick.RemoveAllListeners();
+
+            btn.image.color = Color.white;
+
+            Image[] childImages = btn.GetComponentsInChildren<Image>(true);
+            foreach (Image img in childImages)
+            {
+                if (img != btn.image)
+                {
+                    img.sprite = null;
+                    img.color = new Color(1f, 1f, 1f, 0f); 
+                }
+            }
+        }
+    }
+    public void SetButtonInfo(int indexButton, int idSeller)
+    {
+        _buttons[indexButton].onClick.RemoveAllListeners(); 
+        _buttons[indexButton].onClick.AddListener(() => MenuController.ChooseProductInfo(indexButton,idSeller));
     }
 }
