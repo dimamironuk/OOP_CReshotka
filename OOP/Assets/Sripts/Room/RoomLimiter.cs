@@ -10,7 +10,6 @@ public class RoomLimiter : MonoBehaviour
     {
         rooms = new Dictionary<int, Room>();
     }
-
     public void AddRoom(Room room)
     {
         rooms.Add(rooms.Count, room);
@@ -34,10 +33,6 @@ public class RoomLimiter : MonoBehaviour
             if (k >= rooms.Count / 2)
                 bossRange.Add(k);
         }
-
-        if (bossRange.Count == 0)
-            bossRange.AddRange(freeIndices);
-
         int bossIndex = bossRange[Random.Range(0, bossRange.Count)];
         freeIndices.Remove(bossIndex);
         rooms[bossIndex].roomType = Room.RoomType.Boss;
@@ -47,7 +42,6 @@ public class RoomLimiter : MonoBehaviour
 
         SpawnObjTypes();
     }
-
     void SpawnObjTypes()
     {
         int countSeller = 0;
@@ -68,14 +62,14 @@ public class RoomLimiter : MonoBehaviour
                     break;
                 case Room.RoomType.Seller:
                     objSpawn = Resources.Load<GameObject>("Seller");
-                    objSpawn.GetComponent<SellerController>()?.SetId(countSeller++);
-                    objSpawn.GetComponent<SellerController>()?.SetName("Vova abibas");
+                    objSpawn.GetComponent<SellerController>().SetId(countSeller++);
+                    objSpawn.GetComponent<SellerController>().SetName("Vova abibas");
                     objSpawn.GetComponent<SellerController>().SetSellerPanel(_sellerPanel);
                     break;
                 case Room.RoomType.None:
                     room.roomType = Room.RoomType.Enemy;
-                    objSpawn = Resources.Load<GameObject>("spawner");
-                    objSpawn.GetComponent<SpawnerController>().enemyPrefab = Resources.Load<GameObject>("enemy_1");
+                    objSpawn = Resources.Load<GameObject>("spawnerEnemy");
+                    objSpawn.GetComponent<EnemySpawner>().enemyPrefab = Resources.Load<GameObject>("enemy_1");
                     break;
             }
             room.roomSpawnObj = objSpawn;

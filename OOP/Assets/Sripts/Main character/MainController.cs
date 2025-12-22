@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class MainController : MonoBehaviour
 {
+    private Animator animator;
     public DynamicJoystick joystick;
     public float speed = 5f;
     private MainCharacter characterLogic;
@@ -26,6 +27,7 @@ public class MainController : MonoBehaviour
 
     void Awake()
     {
+        animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
 
         if (rb == null)
@@ -64,9 +66,12 @@ public class MainController : MonoBehaviour
 
         if (direction != Vector2.zero)
         {
-            float yRotation = (direction.x >= 0f) ? 180f : 0f;
+            float yRotation = (direction.x >= 0f) ? 0f : 180f;
             transform.rotation = Quaternion.Euler(0, yRotation, 0);
+            animator.SetBool("isWalk", true);
         }
+        else animator.SetBool("isWalk", false);
+
     }
 
     public void PerformAttack_B()
@@ -97,13 +102,13 @@ public class MainController : MonoBehaviour
     {
         GameObject closestEnemyObject = FindClosestEnemyObjectByTag();
         Transform targetTransform = (closestEnemyObject != null) ? closestEnemyObject.transform : null;
-
         if (closestEnemyObject == null)
         {
             Debug.Log("Skill target not found.");
             return;
         }
 
+        animator.SetBool("isUlta", true);
         switch (type) {
             case SkillExecutionType.fireball:
             case SkillExecutionType.freezer:
@@ -141,7 +146,9 @@ public class MainController : MonoBehaviour
             default:
                 Debug.LogError($"Unhandled SkillExecutionType: {type}. Перевірте, чи всі нащадки MainCharacter визначили коректний тип.");
                 break;
+
         }
+        //animator.SetBool("isUlta", false);
     }
 
     void PerformLungeAttack(int damage)
@@ -153,7 +160,7 @@ public class MainController : MonoBehaviour
     private void ApplyDamageToEnemy(GameObject target, int damage)
     {
         EnemyBase enemyComponent = target.GetComponent<EnemyBase>();
-
+        animator.SetBool("isAttack", true);
         if (enemyComponent != null)
         {
             enemyComponent.TakeDMG(damage);
@@ -163,6 +170,7 @@ public class MainController : MonoBehaviour
         {
             Debug.LogWarning($"Target {target.name} is not an Enemy.");
         }
+        animator.SetBool("isAttack", false);
     }
 
     public void TakeDMG(float damage)

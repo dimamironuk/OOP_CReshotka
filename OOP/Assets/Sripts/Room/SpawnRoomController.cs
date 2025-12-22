@@ -21,7 +21,6 @@ public class SpawnRoomController : MonoBehaviour
         Invoke(nameof(SpawnRoom), 0.2f);
         Destroy(gameObject, 0.5f);
     }
-
     private void SpawnRoom()
     {
         RoomFactory factory = direction switch
