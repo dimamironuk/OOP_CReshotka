@@ -35,7 +35,7 @@ public class WitchCharacter : MainCharacter
         if (currentTime < nextSkillAvailableTime)
         {
             float remainingTime = nextSkillAvailableTime - currentTime;
-            Debug.LogWarning($"Witch Skill на кулдауні! Залишилось: {remainingTime:F2} сек.");
+            Debug.LogWarning($"Witch Skill on cooldown! Remain: {remainingTime:F2} sec.");
             return;
         }
 
@@ -45,6 +45,6 @@ public class WitchCharacter : MainCharacter
 
         OnSkillRequested?.Invoke(damage, SkillExecutionType.fireball);
 
-        Debug.Log("Witch використовує Skill: fireball!");
+        Debug.Log("Witch uses Skill: fireball!");
     }
 }

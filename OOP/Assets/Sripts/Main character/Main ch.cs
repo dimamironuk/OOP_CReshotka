@@ -76,7 +76,6 @@ public abstract class MainCharacter
         }
         return damage;
     }
-    //          #################################################################33          ѕ≈–≈ƒ≈Ћј“№ одно и то же буквально 
     public virtual int CalculateSkillDamage()
     {
         int damage = this.Stats.skillDamage;

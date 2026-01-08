@@ -45,16 +45,18 @@ public class SkillProjectileComponent : MonoBehaviour
     {
         if (collision.gameObject == owner) return;
 
+        if (collision.CompareTag("Wall"))
+        {
+            DestroyProjectile();
+        }
+
         if (collision.CompareTag("Enemy"))
         {
             ApplyDamageToTarget(collision.gameObject);
             DestroyProjectile();
         }
 
-        if (collision.CompareTag("Wall"))
-        {
-            DestroyProjectile();
-        }
+        
     }
 
     protected virtual void ApplyDamageToTarget(GameObject target)
