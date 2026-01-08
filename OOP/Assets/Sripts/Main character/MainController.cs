@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class MainController : MonoBehaviour
 {
-    private Animator animator;
+    public Animator animator;
     public DynamicJoystick joystick;
     public float speed = 5f;
     private MainCharacter characterLogic;
@@ -107,8 +107,8 @@ public class MainController : MonoBehaviour
             Debug.Log("Skill target not found.");
             return;
         }
+        animator.SetBool("IsUlta", true);
 
-        animator.SetBool("isUlta", true);
         switch (type) {
             case SkillExecutionType.fireball:
             case SkillExecutionType.freezer:
@@ -148,7 +148,7 @@ public class MainController : MonoBehaviour
                 break;
 
         }
-        //animator.SetBool("isUlta", false);
+       // animator.SetBool("IsUlta", false);
     }
 
     void PerformLungeAttack(int damage)

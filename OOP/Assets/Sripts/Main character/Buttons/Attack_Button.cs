@@ -27,11 +27,14 @@ public class Attack_Button : MonoBehaviour
 
         private void OnAttackClicked()
         {
+            mainController.animator.SetBool("IsAttack", true);
             mainController.PerformAttack_B();
+            mainController.animator.SetBool("IsAttack", false);
         }
 
         void OnDestroy()
         {
+        
             if (button != null)
             {
                 button.onClick.RemoveListener(OnAttackClicked);
