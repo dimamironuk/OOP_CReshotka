@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class MainController : MonoBehaviour
 {
     public Animator animator;
-    public DynamicJoystick joystick;
+    public FixedJoystick joystick;
     public float speed = 5f;
     private MainCharacter characterLogic;
     private Rigidbody2D rb;
@@ -21,7 +21,7 @@ public class MainController : MonoBehaviour
     [Header("Attack Settings (Unity Dependent)")]
     [SerializeField] private CharacterType selectedCharacterType = CharacterType.Witch;
     [SerializeField] private SkillExecutionType selectedSkillType = SkillExecutionType.fireball;
-    [SerializeField] public float attackRadius = 10f;
+    [SerializeField] public float attackRadius = 20f;
     [SerializeField] private string EnemyTag = "Enemy";
     [SerializeField] private float attackCooldown = 1f;
 

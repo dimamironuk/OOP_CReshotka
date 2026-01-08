@@ -34,7 +34,7 @@ public class ArcherCharacter : MainCharacter
         if (currentTime < nextSkillAvailableTime)
         {
             float remainingTime = nextSkillAvailableTime - currentTime;
-            Debug.LogWarning($"Witch Skill на кулдауні! Залишилось: {remainingTime:F2} сек.");
+            Debug.LogWarning($"Archer Skill on cooldown! Remain: {remainingTime:F2} sec.");
             return;
         }
 
@@ -44,6 +44,6 @@ public class ArcherCharacter : MainCharacter
 
         OnSkillRequested?.Invoke(damage, SkillExecutionType.poisonedArrows);
 
-        Debug.Log("Witch використовує Skill: Ice Bolt!");
+        Debug.Log("Archer uses Skill: Ice Bolt!");
     }
 }

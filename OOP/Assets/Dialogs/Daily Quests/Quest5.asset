@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a6002ffb95b77f4791e174ea90107e7, type: 3}
+  m_Name: Quest5
+  m_EditorClassIdentifier: 
+  questID: 5
+  questName: Living hell!
+  questDialogue: {fileID: 11400000, guid: d64819f22c54c924bae6d9a6a33a06cd, type: 2}
+  info: 'Old man is requesting:
+
+    - 5 herbs, 10 teeth of kamikadze
+
+    - 12 pieces
+    of goblin`s skin
+
+    - 50 drops of blood.'
