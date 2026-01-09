@@ -6737,6 +6737,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainRoom
       objectReference: {fileID: 0}
+    - target: {fileID: 5045723102758220826, guid: 778afacf82c9acd4b9823fb84763e1c8, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 5202830571486701787, guid: 778afacf82c9acd4b9823fb84763e1c8, type: 3}
       propertyPath: m_SortingOrder
       value: -5
