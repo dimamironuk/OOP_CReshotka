@@ -100,8 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  heartPrefab: {fileID: 1775711504814764257, guid: 7a08f566397e949feb942f28250ff94d, type: 3}
-  heartDropChance: 0.5
+  heartPrefab: {fileID: 5394117275438388989, guid: 72e23403bb9b57a42a455548bf033c07, type: 3}
+  heartDropChance: 1
   _moveSpeed: 5
   _maxHealth: 100
   _sightRange: 10

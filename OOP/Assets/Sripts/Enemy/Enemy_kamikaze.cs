@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ExplosiveEnemy : EnemyBase
+public class Enemy_kamikaze : EnemyBase
 {
     [Header("Kamikaze Unique Stats")]
     [SerializeField] private float _moveSpeed = 5f;

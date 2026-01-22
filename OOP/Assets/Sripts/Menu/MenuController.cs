@@ -108,7 +108,7 @@ public class MenuController : MonoBehaviour
     //Main menu
     public void ButtonNewGame()
     {
-        Application.LoadLevel(1);
+        Application.LoadLevel(3);
     }
     public void ButtonGame()
     {
