@@ -2,19 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PetController : MonoBehaviour
 {
+    public enum Rarity { Rare, Epic, Legendary};
+
     private Transform _player;
     [SerializeField] private float _speed = 8f;
     [SerializeField] private float _minDis = 2f;
     private Rigidbody2D _rb;
-    private SpriteRenderer _sprite;
+    public SpriteRenderer sprite;
     private Vector3 dir;
+    public Rarity rarity;
 
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _sprite = GetComponent<SpriteRenderer>();
+        if (_rb == null)
+            _rb = gameObject.AddComponent<Rigidbody2D>();
+        sprite = GetComponent<SpriteRenderer>();
         _player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
@@ -31,11 +37,11 @@ public class PetController : MonoBehaviour
         }
         if (dir.x < 0)
         {
-            _sprite.flipX = true;
+            sprite.flipX = true;
         }
         else if (dir.x > 0)
         {
-            _sprite.flipX = false;
+            sprite.flipX = false;
         }
 
 

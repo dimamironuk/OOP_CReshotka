@@ -1,26 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class SellerController : MonoBehaviour, IPointerClickHandler
+public class SellerController : MonoBehaviour
 {
     [SerializeField] private int id;
     [SerializeField] private string _nameSeller;
     [SerializeField] private List<Product> _products;
     [SerializeField] private GameObject _sellerPanel;
-    [SerializeField] private GameObject _menuPauseButton;
+    [SerializeField] private GameObject _gamePanel;
     [SerializeField] private SellerSettingsController _settingsController;
     private bool _playerNear = false;
-
-    private void Awake()
-    {
-        _settingsController = GameObject.FindGameObjectWithTag("SellerSetting").GetComponent<SellerSettingsController>();
-        _menuPauseButton = GameObject.FindGameObjectWithTag("MenuPause");
-    }
     public void SetSellerPanel(GameObject sellerPanel)
     {
         _sellerPanel = sellerPanel;
+    }
+    public void SetGamePanel(GameObject gamePanel)
+    {
+        _gamePanel = gamePanel;
+    }
+    public void SetSellerSettings(SellerSettingsController settingsController)
+    {
+        _settingsController = settingsController;
     }
     public void SetName(string name)
     {
@@ -66,6 +67,7 @@ public class SellerController : MonoBehaviour, IPointerClickHandler
         if (other.CompareTag("Player"))
         {
             _playerNear = true;
+            OnPointerClick();
         }
     }
     private void OnTriggerExit2D(Collider2D other)
@@ -75,13 +77,13 @@ public class SellerController : MonoBehaviour, IPointerClickHandler
             _playerNear = false;
         }
     }
-    public void OnPointerClick(PointerEventData eventData)
+    public void OnPointerClick()
     {
+            _sellerPanel.SetActive(true);
+            _gamePanel.SetActive(false);
+            _settingsController.ViewProductSeller(this);
         if (_playerNear && _sellerPanel != null)
         {
-            _sellerPanel.SetActive(true);
-            _menuPauseButton.SetActive(false);
-            _settingsController.ViewProductSeller(this);
         }
     }
 }
