@@ -11,12 +11,12 @@ public class SpawnRoomController : MonoBehaviour
     public RoomFactory downFactory;
     public RoomFactory leftFactory;
     public RoomFactory rightFactory;
-    private RoomLimiter roomLimiter;
+    [SerializeField] private RoomLimiter roomLimiter;
 
     private bool isTouch = false;
     private void Start()
     {
-        roomLimiter = FindAnyObjectByType<RoomLimiter>();
+        if(!roomLimiter) roomLimiter = FindAnyObjectByType<RoomLimiter>();
         roomLimiter.activeSpawners++;
         Invoke(nameof(SpawnRoom), 0.2f);
         Destroy(gameObject, 0.5f);
