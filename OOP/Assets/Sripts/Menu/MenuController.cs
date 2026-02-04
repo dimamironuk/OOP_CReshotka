@@ -16,6 +16,7 @@ public class MenuController : MonoBehaviour
     //Inventory
     public void OpenInventory()
     {
+        FindAnyObjectByType<DataBaseItem>().ViewInventory();
         _inventoryPanel.SetActive(true);
         _gamePanel.SetActive(false);
     }

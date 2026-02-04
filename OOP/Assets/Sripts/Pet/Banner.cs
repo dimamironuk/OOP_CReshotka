@@ -1,23 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class Banner : MonoBehaviour
 {
     [SerializeField] private List<Sprite> rarePets;
     [SerializeField] private List<Sprite> epicPets;
     [SerializeField] private List<Sprite> legendaryPets;
+    [SerializeField] private GameObject effectPet;
+    [SerializeField] private Image spritePet; 
     const int garantLegendary = 60;
     const int garantEpic = 10;
     [SerializeField] private int totalRolls;
     [SerializeField] private int epicRolls;
     [SerializeField] private int countRitual;
-
+    [SerializeField] private TextMeshProUGUI textRitual;
     private void Awake()
     {
         totalRolls = PlayerPrefs.GetInt("totalRolls");
         epicRolls = PlayerPrefs.GetInt("epicRolls");
         countRitual = PlayerPrefs.GetInt("countRitual");
+        textRitual.text = countRitual.ToString();
         countRitual = 10;
     }
 
@@ -71,7 +76,11 @@ public class Banner : MonoBehaviour
             }
         }
         Debug.Log(pet.rarity);
+        spritePet.sprite = pet.sprite.sprite;
+        effectPet.SetActive(true);
         totalRolls++;
         countRitual--;
+        textRitual.text = countRitual.ToString();
+
     }
 }

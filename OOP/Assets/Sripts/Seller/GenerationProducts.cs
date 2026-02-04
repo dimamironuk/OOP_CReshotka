@@ -31,9 +31,41 @@ public class GenerationProducts : MonoBehaviour
         }
         return Rarity.Common;
     }
+    private int RandomBaf(Rarity rarity)
+    {
+        int countBonus = 0;
+        switch (rarity) { 
+            case Rarity.Common:
+                {
+                    countBonus = Random.Range(1,3);
+                    break;
+                }
+            case Rarity.Rare:
+                {
+                    countBonus = Random.Range(4, 6);
+                    break;
+                }
+            case Rarity.Epic:
+                {
+                    countBonus = Random.Range(8, 10);
+                    break;
+                }
+            case Rarity.Mythic:
+                {
+                    countBonus = Random.Range(12, 15);
+                    break;
+                }
+            case Rarity.Legendary:
+                {
+                    countBonus = Random.Range(15, 20);
+                    break;
+                }
+        }
+        return countBonus;
+    }
     public void GeneratorSellerProducts(SellerController seller)
     {
-        if(this.products.Count < 9) return;
+        seller.ClearProducts();
         int countProducts = Random.Range(2, 10);
         Product[] products = new Product[countProducts];
         for (int i = 0; i < countProducts; i++) {
@@ -41,6 +73,7 @@ public class GenerationProducts : MonoBehaviour
             product.GetComponent<SpriteRenderer>().enabled = false;
             product.SetIdSeller(seller.GetId());
             product.SetRarity(RandomRarity());
+            product.SetBonus(RandomBaf(product.GetRarity()));
             products[i] = product;
         }
         seller.CreateProduct(products);

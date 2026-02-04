@@ -52,8 +52,10 @@ MonoBehaviour:
     Its energy enhances the wearer's life force, gradually restoring health and increasing
     resistance to damage. It is said that the very heart of the earth pulses within
     it.
+  _bonus: 0
   _icon: {fileID: 21300000, guid: 0a7540ce93cad3f4cb30402e5579dea7, type: 3}
   _rarity: 0
+  _typeProduct: 2
 --- !u!212 &9023332605608956097
 SpriteRenderer:
   m_ObjectHideFlags: 0
