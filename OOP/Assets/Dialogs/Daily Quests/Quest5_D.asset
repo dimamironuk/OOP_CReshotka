@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: Quest5_D
+  m_EditorClassIdentifier: Assembly-CSharp::Dialogue
+  npcName: Stikanov
+  portraitSprite: {fileID: 21300000, guid: 28838a2e81f0e5840ac09ea8cdf368f0, type: 3}
+  sentences:
+  - So today`s quest would be probably hell for you...
+  - But i found new poition recipe, it`s just requiere almost everything like 5 herbs,
+    10 teeth of kamikadze, 12 pieces of goblin`s skin.
+  - And 50 drops of blood.
+  choiceOptions:
+  - buttonText: Shit, fine.
+    resultSentence: "Really?! \nYou are brilliant, I would wait for you!"
+    isDailyQuestStarter: 1
+    nextDialogue: {fileID: 0}
+    sceneToLoad: 
+    executeResultSentenceBeforeLoad: 0
+  - buttonText: Oh my God, no!
+    resultSentence: I knew you wold reject it...
+    isDailyQuestStarter: 0
+    nextDialogue: {fileID: 0}
+    sceneToLoad: 
+    executeResultSentenceBeforeLoad: 0

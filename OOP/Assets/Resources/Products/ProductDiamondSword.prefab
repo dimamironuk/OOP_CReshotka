@@ -51,8 +51,10 @@ MonoBehaviour:
   _description: "Healing Potion A clear blue liquid that glows with a soft glow.
     One sip and wounds begin to heal, pain subsides, and strength returns. Alchemists
     call it the \u201Cbreath of life\u201D"
+  _bonus: 0
   _icon: {fileID: 21300000, guid: ff6c71cc362191b449913153cb05ef68, type: 3}
   _rarity: 0
+  _typeProduct: 1
 --- !u!212 &897923640902728208
 SpriteRenderer:
   m_ObjectHideFlags: 0

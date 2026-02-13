@@ -32,7 +32,7 @@ public class WarriorCharacter : MainCharacter
         if (currentTime < nextSkillAvailableTime)
         {
             float remainingTime = nextSkillAvailableTime - currentTime;
-            Debug.LogWarning($"Warrior Skill на кулдауні! Залишилось: {remainingTime:F2} сек.");
+            Debug.LogWarning($"Warrior Skill on cooldown! Remain: {remainingTime:F2} sec.");
             return;
         }
 
@@ -42,6 +42,6 @@ public class WarriorCharacter : MainCharacter
 
         OnSkillRequested?.Invoke(damage,SkillExecutionType.hammer);
 
-        Debug.Log("Warrior використовує Skill: shield!");
+        Debug.Log("Warrior uses Skill: shield!");
     }
 }

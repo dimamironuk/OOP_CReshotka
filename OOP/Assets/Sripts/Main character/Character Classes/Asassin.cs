@@ -34,7 +34,7 @@ public class AsassinCharacter : MainCharacter
         if (currentTime < nextSkillAvailableTime)
         {
             float remainingTime = nextSkillAvailableTime - currentTime;
-            Debug.LogWarning($"Witch Skill на кулдауні! Залишилось: {remainingTime:F2} сек.");
+            Debug.LogWarning($"Assasin Skill on cooldown! Remain: {remainingTime:F2} sec.");
             return;
         }
 
@@ -44,6 +44,6 @@ public class AsassinCharacter : MainCharacter
 
         OnSkillRequested?.Invoke(damage, SkillExecutionType.shurikens);
 
-        Debug.Log("Witch використовує Skill: Ice Bolt!");
+        Debug.Log("Assasin uses Skill: Ice Bolt!");
     }
 }

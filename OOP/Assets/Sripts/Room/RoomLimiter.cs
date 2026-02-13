@@ -4,6 +4,8 @@ using UnityEngine;
 public class RoomLimiter : MonoBehaviour
 {
     [SerializeField] private GameObject _sellerPanel;
+    [SerializeField] private GameObject _gamePanel;
+    [SerializeField] private SellerSettingsController _sellerSettings;
     private Dictionary<int, Room> rooms;
     public int activeSpawners = 0;
     private void Awake()
@@ -65,6 +67,8 @@ public class RoomLimiter : MonoBehaviour
                     objSpawn.GetComponent<SellerController>().SetId(countSeller++);
                     objSpawn.GetComponent<SellerController>().SetName("Vova abibas");
                     objSpawn.GetComponent<SellerController>().SetSellerPanel(_sellerPanel);
+                    objSpawn.GetComponent<SellerController>().SetGamePanel(_gamePanel);
+                    objSpawn.GetComponent<SellerController>().SetSellerSettings(_sellerSettings);
                     break;
                 case Room.RoomType.None:
                     room.roomType = Room.RoomType.Enemy;
