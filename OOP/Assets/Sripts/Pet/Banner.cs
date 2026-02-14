@@ -17,15 +17,19 @@ public class Banner : MonoBehaviour
     [SerializeField] private int epicRolls;
     [SerializeField] private int countRitual;
     [SerializeField] private TextMeshProUGUI textRitual;
+    [SerializeField] private PetLauncher petLauncher;
     private void Awake()
     {
         totalRolls = PlayerPrefs.GetInt("totalRolls");
         epicRolls = PlayerPrefs.GetInt("epicRolls");
         countRitual = PlayerPrefs.GetInt("countRitual");
-        textRitual.text = countRitual.ToString();
         countRitual = 10;
+        textRitual.text = countRitual.ToString();
     }
-
+    public void Continue()
+    {
+        effectPet.SetActive(false);
+    }
     public void RitualPet()
     {
         if (countRitual == 0)
@@ -37,7 +41,7 @@ public class Banner : MonoBehaviour
         GameObject petGO = new GameObject("Pet");
         PetController pet = petGO.AddComponent<PetController>();
         pet.sprite = petGO.AddComponent<SpriteRenderer>();
-
+        petGO.GetComponent<SpriteRenderer>().enabled = false;
         if (totalRolls >= garantLegendary)
         {
             pet.sprite.sprite = legendaryPets[Random.Range(0, legendaryPets.Count)];
@@ -77,10 +81,22 @@ public class Banner : MonoBehaviour
         }
         Debug.Log(pet.rarity);
         spritePet.sprite = pet.sprite.sprite;
+        pet.namePet = pet.sprite.sprite.name;
+
         effectPet.SetActive(true);
         totalRolls++;
         countRitual--;
         textRitual.text = countRitual.ToString();
-
+        if (!petLauncher.IsRepetition(pet))
+        {
+            PetLauncher._pets.Add(petGO);
+            petGO.SetActive(false);
+            petLauncher.AddNewPet(petGO);
+            DontDestroyOnLoad(petGO); 
+        }
+        else
+        {
+            Destroy(petGO);
+        }
     }
 }
