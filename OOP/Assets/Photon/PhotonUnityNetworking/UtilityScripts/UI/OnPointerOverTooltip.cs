@@ -19,14 +19,14 @@ namespace Photon.Pun.UtilityScripts
 
 	    void OnDestroy()
 	    {
-	        PointedAtGameObjectInfo.Instance.RemoveFocus(this.GetComponent<PhotonView>());
+	       // PointedAtGameObjectInfo.Instance.RemoveFocus(this.GetComponent<PhotonView>());
 	    }
 		
 		#region IPointerExitHandler implementation
 
 		void IPointerExitHandler.OnPointerExit (PointerEventData eventData)
 		{
-			PointedAtGameObjectInfo.Instance.RemoveFocus (this.GetComponent<PhotonView>());
+			//PointedAtGameObjectInfo.Instance.RemoveFocus (this.GetComponent<PhotonView>());
 
 		}
 
@@ -36,7 +36,7 @@ namespace Photon.Pun.UtilityScripts
 
 		void IPointerEnterHandler.OnPointerEnter (PointerEventData eventData)
 		{
-			PointedAtGameObjectInfo.Instance.SetFocus (this.GetComponent<PhotonView>());
+			//PointedAtGameObjectInfo.Instance.SetFocus (this.GetComponent<PhotonView>());
 		}
 
 		#endregion
