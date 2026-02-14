@@ -12,7 +12,19 @@ public class MenuController : MonoBehaviour
     [SerializeField] private GameObject _pausePanel = null;
     [SerializeField] private GameObject _gamePanel = null;
     [SerializeField] private GameObject _menuBannerPanel = null;
+    [SerializeField] private GameObject _menuPetPanel = null;
 
+    //Pet
+    public void OpenPet()
+    {
+        _menuPetPanel.SetActive(true);
+        _gamePanel.SetActive(false);
+    }
+    public void ExitPet()
+    {
+        _menuPetPanel.SetActive(false);
+        _gamePanel.SetActive(true);
+    }
     //Inventory
     public void OpenInventory()
     {
