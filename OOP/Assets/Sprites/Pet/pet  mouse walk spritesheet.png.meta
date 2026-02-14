@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ce5d9b4260cd4494d8a969042fbee63e
+guid: 51e22e9377b950a489b7d23d8eba7369
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ded_0
+      name: pet  mouse walk spritesheet_0
       rect:
         serializedVersion: 2
-        x: 160
-        y: 128
-        width: 576
-        height: 832
+        x: 0
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,20 +137,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 862f6e1aee830e54ab7937be248c5a7c
-      internalID: 656892806
+      spriteID: 88e41c7d0b1d8b1489f6422f67296f16
+      internalID: 1404929814
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ded_1
+      name: pet  mouse walk spritesheet_1
       rect:
         serializedVersion: 2
-        x: 1184
-        y: 128
-        width: 576
-        height: 864
+        x: 64
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -158,8 +158,113 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4f3ebfadba7b5d342bcdfba627345064
-      internalID: -1519642097
+      spriteID: 2621140f4bc7e3248922669a0e792811
+      internalID: 940054134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pet  mouse walk spritesheet_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c04840f86d1c2004f8c7ec9cf34cbe90
+      internalID: -1051676586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pet  mouse walk spritesheet_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2e02bd05f774d646ae6a127b00eb3ff
+      internalID: 51729065
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pet  mouse walk spritesheet_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60d6acf88ae6d48449c04001a63668a0
+      internalID: 190088856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pet  mouse walk spritesheet_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3f1189198a688b4a8691e3154e045cb
+      internalID: 118946593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pet  mouse walk spritesheet_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32d6dafc8059119428a3ea4436bbad5d
+      internalID: -46312210
       vertices: []
       indices: 
       edges: []
@@ -175,8 +280,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      ded_0: 656892806
-      ded_1: -1519642097
+      pet  mouse walk spritesheet_0: 1404929814
+      pet  mouse walk spritesheet_1: 940054134
+      pet  mouse walk spritesheet_2: -1051676586
+      pet  mouse walk spritesheet_3: 51729065
+      pet  mouse walk spritesheet_4: 190088856
+      pet  mouse walk spritesheet_5: 118946593
+      pet  mouse walk spritesheet_6: -46312210
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

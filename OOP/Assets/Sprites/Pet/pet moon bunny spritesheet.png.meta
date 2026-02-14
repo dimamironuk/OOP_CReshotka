@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ce5d9b4260cd4494d8a969042fbee63e
+guid: 7a6a088578b8c534799fa8a9dacacea7
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ded_0
+      name: pet moon bunny spritesheet_0
       rect:
         serializedVersion: 2
-        x: 160
-        y: 128
-        width: 576
-        height: 832
+        x: 0
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,20 +137,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 862f6e1aee830e54ab7937be248c5a7c
-      internalID: 656892806
+      spriteID: 82f267bd21f7aa542a97ee6ea8ba2c4d
+      internalID: -594725702
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ded_1
+      name: pet moon bunny spritesheet_1
       rect:
         serializedVersion: 2
-        x: 1184
-        y: 128
-        width: 576
-        height: 864
+        x: 64
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -158,8 +158,134 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4f3ebfadba7b5d342bcdfba627345064
-      internalID: -1519642097
+      spriteID: 6f8f229be8a913547affb0d580b1b5aa
+      internalID: 2038761763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pet moon bunny spritesheet_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76239f23840074b48a5bd50d727fdaf6
+      internalID: 1927015380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pet moon bunny spritesheet_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9aac37e6b698db545b8c5668654a52eb
+      internalID: 1851562849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pet moon bunny spritesheet_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5930b7c5a5eb3f748a143ae2cd9ac2f0
+      internalID: -879497497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pet moon bunny spritesheet_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9450797ad767b5143a01330584c992b0
+      internalID: -1489275833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pet moon bunny spritesheet_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 780d692061029394fbfcd106830a94c1
+      internalID: -1118733594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pet moon bunny spritesheet_7
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e22ef58bb2caf44fbf03dd147df9b52
+      internalID: -605528479
       vertices: []
       indices: 
       edges: []
@@ -175,8 +301,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      ded_0: 656892806
-      ded_1: -1519642097
+      pet moon bunny spritesheet_0: -594725702
+      pet moon bunny spritesheet_1: 2038761763
+      pet moon bunny spritesheet_2: 1927015380
+      pet moon bunny spritesheet_3: 1851562849
+      pet moon bunny spritesheet_4: -879497497
+      pet moon bunny spritesheet_5: -1489275833
+      pet moon bunny spritesheet_6: -1118733594
+      pet moon bunny spritesheet_7: -605528479
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
