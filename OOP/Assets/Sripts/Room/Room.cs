@@ -11,7 +11,7 @@ public class Room : MonoBehaviour
 
     public void SpawnObjRoomType()
     {
-        Instantiate(roomSpawnObj,spawnPoint,Quaternion.identity);
+        roomSpawnObj = Instantiate(roomSpawnObj,spawnPoint,Quaternion.identity);
         if (RoomType.Seller == roomType)
         {
             GenerationProducts genProduct = GameObject.FindGameObjectWithTag("GeneratorProducts").GetComponent<GenerationProducts>();
