@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SettingsUI : MonoBehaviour
+public class OpenSettings : MonoBehaviour
 {
-    public GameObject menuPausePanel;
-    public GameObject settingsPanel;
+    [SerializeField] private GameObject menuPausePanel;
+    [SerializeField] private GameObject settingsPanel;
 
-    public void OpenSettings()
+    public void Open()
     {
         menuPausePanel.SetActive(false);
         settingsPanel.SetActive(true);
     }
 
-    public void CloseSettings()
+    public void Close()
     {
         settingsPanel.SetActive(false);
         menuPausePanel.SetActive(true);
