@@ -1,0 +1,104 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\User\\Desktop\\uni\\\u041E\u041E\u041F\\OOP_CReshotka\\OOP\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{7056E223-B944-7F6B-F00D-1CE9B20A7FD5}|Assembly-CSharp.csproj|c:\\users\\user\\desktop\\uni\\\u043E\u043E\u043F\\oop_creshotka\\oop\\assets\\sripts\\room\\room.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7056E223-B944-7F6B-F00D-1CE9B20A7FD5}|Assembly-CSharp.csproj|solutionrelative:assets\\sripts\\room\\room.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7056E223-B944-7F6B-F00D-1CE9B20A7FD5}|Assembly-CSharp.csproj|c:\\users\\user\\desktop\\uni\\\u043E\u043E\u043F\\oop_creshotka\\oop\\assets\\sripts\\settings\\opensettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7056E223-B944-7F6B-F00D-1CE9B20A7FD5}|Assembly-CSharp.csproj|solutionrelative:assets\\sripts\\settings\\opensettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{64EF7BFA-B6E2-AE7E-0EEA-C674912A8BFB}|PhotonUnityNetworking.Utilities.csproj|C:\\Users\\User\\Desktop\\uni\\\u041E\u041E\u041F\\OOP_CReshotka\\OOP\\assets\\photon\\photonunitynetworking\\utilityscripts\\ui\\onpointerovertooltip.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{64EF7BFA-B6E2-AE7E-0EEA-C674912A8BFB}|PhotonUnityNetworking.Utilities.csproj|solutionrelative:assets\\photon\\photonunitynetworking\\utilityscripts\\ui\\onpointerovertooltip.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\User\\Desktop\\uni\\\u041E\u041E\u041F\\OOP_CReshotka\\OOP\\Assets\\Sripts\\Settings\\SettingsUI.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Sripts\\Settings\\SettingsUI.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Room.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\uni\\\u041E\u041E\u041F\\OOP_CReshotka\\OOP\\Assets\\Sripts\\Room\\Room.cs",
+              "RelativeDocumentMoniker": "Assets\\Sripts\\Room\\Room.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\uni\\\u041E\u041E\u041F\\OOP_CReshotka\\OOP\\Assets\\Sripts\\Room\\Room.cs*",
+              "RelativeToolTip": "Assets\\Sripts\\Room\\Room.cs*",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-22T18:05:27.889Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "OpenSettings.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\uni\\\u041E\u041E\u041F\\OOP_CReshotka\\OOP\\Assets\\Sripts\\Settings\\OpenSettings.cs",
+              "RelativeDocumentMoniker": "Assets\\Sripts\\Settings\\OpenSettings.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\uni\\\u041E\u041E\u041F\\OOP_CReshotka\\OOP\\Assets\\Sripts\\Settings\\OpenSettings.cs",
+              "RelativeToolTip": "Assets\\Sripts\\Settings\\OpenSettings.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-15T14:18:35.414Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "OnPointerOverTooltip.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\uni\\\u041E\u041E\u041F\\OOP_CReshotka\\OOP\\Assets\\Photon\\PhotonUnityNetworking\\UtilityScripts\\UI\\OnPointerOverTooltip.cs",
+              "RelativeDocumentMoniker": "Assets\\Photon\\PhotonUnityNetworking\\UtilityScripts\\UI\\OnPointerOverTooltip.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\uni\\\u041E\u041E\u041F\\OOP_CReshotka\\OOP\\Assets\\Photon\\PhotonUnityNetworking\\UtilityScripts\\UI\\OnPointerOverTooltip.cs",
+              "RelativeToolTip": "Assets\\Photon\\PhotonUnityNetworking\\UtilityScripts\\UI\\OnPointerOverTooltip.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAIwCYAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-13T15:18:04.655Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "SettingsUI.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\uni\\\u041E\u041E\u041F\\OOP_CReshotka\\OOP\\Assets\\Sripts\\Settings\\SettingsUI.cs",
+              "RelativeDocumentMoniker": "Assets\\Sripts\\Settings\\SettingsUI.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\uni\\\u041E\u041E\u041F\\OOP_CReshotka\\OOP\\Assets\\Sripts\\Settings\\SettingsUI.cs",
+              "RelativeToolTip": "Assets\\Sripts\\Settings\\SettingsUI.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-23T19:31:38.246Z"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 1190,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
