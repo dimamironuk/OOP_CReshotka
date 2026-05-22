@@ -28,6 +28,7 @@ public class Skill_Button : MonoBehaviour
     public void OnSkillClicked()
     {
         mainController.PerformSkill_B();
+        
     }
 
     void OnDestroy()

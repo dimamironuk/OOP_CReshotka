@@ -8,8 +8,9 @@ using UnityEngine.UI;
 
 public class MainController : MonoBehaviour
 {
-    public DynamicJoystick joystick;
-    public float speed = 25f;
+    public Animator animator;
+    public FixedJoystick joystick;
+    public float speed = 5f;
     private MainCharacter characterLogic;
     private Rigidbody2D rb;
     private Vector2 direction;
@@ -20,12 +21,13 @@ public class MainController : MonoBehaviour
     [Header("Attack Settings (Unity Dependent)")]
     [SerializeField] private CharacterType selectedCharacterType = CharacterType.Witch;
     [SerializeField] private SkillExecutionType selectedSkillType = SkillExecutionType.fireball;
-    [SerializeField] public float attackRadius = 10f;
+    [SerializeField] public float attackRadius = 20f;
     [SerializeField] private string EnemyTag = "Enemy";
     [SerializeField] private float attackCooldown = 1f;
 
     void Awake()
     {
+        animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
 
         if (rb == null)
@@ -54,18 +56,22 @@ public class MainController : MonoBehaviour
     void FixedUpdate()
     {
         if (joystick == null || rb == null) return;
-
-        direction = Vector2.up * joystick.Vertical + Vector2.right * joystick.Horizontal;
-        rb.AddForce(direction * speed * Time.deltaTime, ForceMode2D.Impulse);
+        Vector2 targetVelocity = direction.normalized * speed;
+        rb.velocity = Vector2.Lerp(rb.velocity, targetVelocity, 5f*Time.fixedDeltaTime);
     }
 
     void Update()
     {
+        direction = new Vector2(joystick.Horizontal, joystick.Vertical);
+
         if (direction != Vector2.zero)
         {
-            float yRotation = (direction.x >= 0f) ? 180f : 0f;
+            float yRotation = (direction.x >= 0f) ? 0f : 180f;
             transform.rotation = Quaternion.Euler(0, yRotation, 0);
+            animator.SetBool("isWalk", true);
         }
+        else animator.SetBool("isWalk", false);
+
     }
 
     public void PerformAttack_B()
@@ -96,12 +102,12 @@ public class MainController : MonoBehaviour
     {
         GameObject closestEnemyObject = FindClosestEnemyObjectByTag();
         Transform targetTransform = (closestEnemyObject != null) ? closestEnemyObject.transform : null;
-
         if (closestEnemyObject == null)
         {
             Debug.Log("Skill target not found.");
             return;
         }
+        animator.SetBool("IsUlta", true);
 
         switch (type) {
             case SkillExecutionType.fireball:
@@ -140,7 +146,9 @@ public class MainController : MonoBehaviour
             default:
                 Debug.LogError($"Unhandled SkillExecutionType: {type}. Перевірте, чи всі нащадки MainCharacter визначили коректний тип.");
                 break;
+
         }
+       // animator.SetBool("IsUlta", false);
     }
 
     void PerformLungeAttack(int damage)
@@ -152,7 +160,7 @@ public class MainController : MonoBehaviour
     private void ApplyDamageToEnemy(GameObject target, int damage)
     {
         EnemyBase enemyComponent = target.GetComponent<EnemyBase>();
-
+        animator.SetBool("isAttack", true);
         if (enemyComponent != null)
         {
             enemyComponent.TakeDMG(damage);
@@ -162,6 +170,7 @@ public class MainController : MonoBehaviour
         {
             Debug.LogWarning($"Target {target.name} is not an Enemy.");
         }
+        animator.SetBool("isAttack", false);
     }
 
     public void TakeDMG(float damage)

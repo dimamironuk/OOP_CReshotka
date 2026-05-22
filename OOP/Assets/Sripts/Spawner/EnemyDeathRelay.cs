@@ -1,17 +1,26 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-[DisallowMultipleComponent]
-public sealed class EnemyDeathRelay : MonoBehaviour
+public class EnemyDeathRelay : MonoBehaviour
 {
-    public event Action<EnemyDeathRelay> Destroyed;
+    private readonly List<EnemyObserver> observers = new();
 
-    private static bool quitting;
-    private void OnApplicationQuit() => quitting = true;
+    public void Subscribe(EnemyObserver observer)
+    {
+        if (!observers.Contains(observer))
+            observers.Add(observer);
+    }
+
+    public void Unsubscribe(EnemyObserver observer)
+    {
+        observers.Remove(observer);
+    }
 
     private void OnDestroy()
     {
-        if (quitting) return;
-        Destroyed?.Invoke(this);
+        foreach (var observer in observers)
+        {
+            observer.OnEnemyDead();
+        }
     }
 }

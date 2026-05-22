@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
+<<<<<<< HEAD
 
     public Vector3 posGenerated = Vector3.zero;
     public GameObject _spawnObject = null;
@@ -53,5 +54,20 @@ public class BossRoom : Room
     public override void OnGenerated()
     {
         Instantiate(_spawnObject, posGenerated, Quaternion.identity, transform);
+=======
+    public enum RoomType { Enemy, Boss, Seller, None}
+    public RoomType roomType;
+    public GameObject roomSpawnObj = null;
+    public Vector3 spawnPoint = Vector3.zero;
+
+    public void SpawnObjRoomType()
+    {
+        roomSpawnObj = Instantiate(roomSpawnObj,spawnPoint,Quaternion.identity);
+        if (RoomType.Seller == roomType)
+        {
+            GenerationProducts genProduct = GameObject.FindGameObjectWithTag("GeneratorProducts").GetComponent<GenerationProducts>();
+            genProduct.GeneratorSellerProducts(roomSpawnObj.GetComponent<SellerController>());
+        }
+>>>>>>> main
     }
 }

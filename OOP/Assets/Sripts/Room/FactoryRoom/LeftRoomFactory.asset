@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15121036e5f43ab459e0288294fe2409, type: 3}
+  m_Name: LeftRoomFactory
+  m_EditorClassIdentifier: 
+  prefabs:
+  - {fileID: 5045723102758220826, guid: ae5f939112aa32744b6a92aa67db38fe, type: 3}
+  - {fileID: 5045723102758220826, guid: c5f7ea9e6a2405341812b0d007ccea99, type: 3}
+  - {fileID: 5045723102758220826, guid: d8733d7846f5b4e47b6a8e88b0fec264, type: 3}
+  - {fileID: 5045723102758220826, guid: 4b5e8061b330ac7498ba8ecf0b4e6648, type: 3}
