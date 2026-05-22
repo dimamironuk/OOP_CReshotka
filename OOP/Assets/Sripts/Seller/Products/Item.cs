@@ -1,5 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+<<<<<<< HEAD
+using UnityEngine;
+
+
+public enum Rarity
+{
+    Common,
+    Uncommon,
+    Rare,
+    Epic,
+    Mythic,
+    Legendary
+}
+
+public interface IItmes
+{
+    Rarity ItemRarity { get; set; }
+}
+
+public class Item : MonoBehaviour, IItmes
+{
+    public Rarity ItemRarity { get; set; }
+
+=======
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -48,4 +72,5 @@ public class Item : MonoBehaviour
                 break;
         }
     }
+>>>>>>> main
 }

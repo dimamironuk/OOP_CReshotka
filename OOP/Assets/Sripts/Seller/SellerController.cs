@@ -6,11 +6,17 @@ public class SellerController : MonoBehaviour
 {
     [SerializeField] private int id;
     [SerializeField] private string _nameSeller;
+<<<<<<< HEAD
+    public List<Product> _products;
+    public GameObject _sellerPanel;
+    public GameObject _menuPauseButton;
+=======
     [SerializeField] private List<Product> _products;
     [SerializeField] private GameObject _sellerPanel;
     [SerializeField] private GameObject _gamePanel;
     [SerializeField] private SellerSettingsController _settingsController;
 
+>>>>>>> main
     private bool _playerNear = false;
 
     private void Update()

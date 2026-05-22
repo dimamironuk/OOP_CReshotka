@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Product : MonoBehaviour, IItmes
+public class Product : MonoBehaviour
 {
     [SerializeField] private string _name;
     [SerializeField] private int _idSeller;

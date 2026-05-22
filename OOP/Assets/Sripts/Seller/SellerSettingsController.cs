@@ -8,15 +8,33 @@ using UnityEngine.UI;
 
 public class SellerSettingsController : MonoBehaviour
 {
+<<<<<<< HEAD
+    [SerializeField] private List<SellerController> _seller;
+    [SerializeField] private Button[] _buttons;
+    [SerializeField] private GameObject _storageProduct;
+    private void Awake()
+    {
+        for (int i = 0; i < _seller.Count; i++)
+        {
+            List<Product> products = GenerationProducts(i);
+        }
+    }
+    private void Start()
+=======
     [SerializeField] private Button[] _buttons;
     [SerializeField] private Button _buttonBuy;
     [SerializeField] private int _currentProductIndex = -1;
     public void ViewProductSeller(SellerController seller)
+>>>>>>> main
     {
         ClearButtons();
         if(!_buttonBuy) _buttonBuy = GameObject.Find("B_Buy").GetComponent<Button>();
 
+<<<<<<< HEAD
+       /* for (int i = 0; i < _seller.GetCountProduct() && i < _buttons.Length; i++)
+=======
         for (int i = 0; i < seller.GetCountProduct() && i < _buttons.Length; i++)
+>>>>>>> main
         {
             int index = i;
             Button btn = _buttons[i];
@@ -55,6 +73,25 @@ public class SellerSettingsController : MonoBehaviour
             }
             if (childImage != null)
             {
+<<<<<<< HEAD
+               // childImage.sprite = _seller.GetProduct(i).GetImage();
+                childImage.color = Color.white; 
+            }
+            
+        }*/
+    }
+
+    public List<Product> GenerationProducts(int indexSeller)
+    {
+        List<Product> products = new List<Product>();
+        int randCountProducts = Random.Range(1, 10);
+        for (int i = 0; i < randCountProducts; i++) {
+            products.Add(new Product());
+        }
+        return products;
+    }
+
+=======
                 childImage.sprite = seller.GetProduct(i).GetImage();
                 childImage.color = Color.white;
             }
@@ -129,4 +166,5 @@ public class SellerSettingsController : MonoBehaviour
         _buttons[indexButton].onClick.RemoveAllListeners(); 
         _buttons[indexButton].onClick.AddListener(() => MenuController.ChooseProductInfo(indexButton,idSeller));
     }
+>>>>>>> main
 }
